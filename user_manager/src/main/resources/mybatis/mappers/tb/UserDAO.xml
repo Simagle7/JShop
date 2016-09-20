@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jshop.ssm.dao.tb.IUserDAO">
+
+    <sql id="Base_Column_List">
+        id,
+        user_name,
+        password,
+        name,
+        age,
+        sex,
+        birthday,
+        created,
+        updated
+    </sql>
+    <insert id="insert" parameterType="cn.jshop.ssm.domain.tb.User">
+        INSERT INTO tb_user (
+		    user_name
+		    ,password
+		    ,name
+		    ,age
+		    ,sex
+		    ,birthday
+		    ,created
+		    ,updated
+        ) VALUES (
+		    	#{user_name}
+		    	,#{password}
+		    	,#{name}
+		    	,#{age}
+		    	,#{sex}
+		    	,#{birthday}
+		    	,#{created}
+		    	,#{updated}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMap" >
+        INSERT INTO tb_user (
+		    user_name
+		    ,password
+		    ,name
+		    ,age
+		    ,sex
+		    ,birthday
+		    ,created
+		    ,updated
+        ) VALUES (
+		    	#{map.user_name}
+		    	,#{map.password}
+		    	,#{map.name}
+		    	,#{map.age}
+		    	,#{map.sex}
+		    	,#{map.birthday}
+		    	,#{map.created}
+		    	,#{map.updated}
+        )
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="cn.jshop.ssm.domain.tb.User">
+        UPDATE tb_user
+        <trim prefix="SET" suffixOverrides=",">
+		    user_name=#{user_name},
+		    password=#{password},
+		    name=#{name},
+		    age=#{age},
+		    sex=#{sex},
+		    birthday=#{birthday},
+		    created=#{created},
+		    updated=#{updated},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+	
+	<update id="updateMap">
+        UPDATE tb_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.user_name!=null">
+                user_name = #{map.user_name},
+            </if>
+            <if test="map.password!=null">
+                password = #{map.password},
+            </if>
+            <if test="map.name!=null">
+                name = #{map.name},
+            </if>
+            <if test="map.age!=null">
+                age = #{map.age},
+            </if>
+            <if test="map.sex!=null">
+                sex = #{map.sex},
+            </if>
+            <if test="map.birthday!=null">
+                birthday = #{map.birthday},
+            </if>
+            <if test="map.created!=null">
+                created = #{map.created},
+            </if>
+            <if test="map.updated!=null">
+                updated = #{map.updated},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE tb_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.user_name!=null">
+                user_name = #{update.user_name},
+            </if>
+            <if test="update.password!=null">
+                password = #{update.password},
+            </if>
+            <if test="update.name!=null">
+                name = #{update.name},
+            </if>
+            <if test="update.age!=null">
+                age = #{update.age},
+            </if>
+            <if test="update.sex!=null">
+                sex = #{update.sex},
+            </if>
+            <if test="update.birthday!=null">
+                birthday = #{update.birthday},
+            </if>
+            <if test="update.created!=null">
+                created = #{update.created},
+            </if>
+            <if test="update.updated!=null">
+                updated = #{update.updated},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.user_name!=null">
+                AND user_name = #{condition.user_name}
+            </if>
+            <if test="condition.password!=null">
+                AND password = #{condition.password}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.birthday!=null">
+                AND birthday = #{condition.birthday}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="cn.jshop.ssm.domain.tb.User">
+        UPDATE tb_user
+        <trim prefix="SET" suffixOverrides=",">
+            user_name = #{user_name},
+            password = #{password},
+            name = #{name},
+            age = #{age},
+            sex = #{sex},
+            birthday = #{birthday},
+            created = #{created},
+            updated = #{updated},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+    
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM tb_user
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds">
+        DELETE FROM tb_user
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM tb_user
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="user_name!=null">
+                AND user_name = #{user_name}
+            </if>
+            <if test="password!=null">
+                AND password = #{password}
+            </if>
+            <if test="name!=null">
+                AND name = #{name}
+            </if>
+            <if test="age!=null">
+                AND age = #{age}
+            </if>
+            <if test="sex!=null">
+                AND sex = #{sex}
+            </if>
+            <if test="birthday!=null">
+                AND birthday = #{birthday}
+            </if>
+            <if test="created!=null">
+                AND created = #{created}
+            </if>
+            <if test="updated!=null">
+                AND updated = #{updated}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM tb_user WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="cn.jshop.ssm.domain.tb.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_user
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="cn.jshop.ssm.domain.tb.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_user WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="cn.jshop.ssm.domain.tb.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_user WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_user
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="cn.jshop.ssm.domain.tb.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_user
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.user_name!=null">
+                ${condition.groupOp}   user_name  ${condition.user_name.op}  #{condition.user_name.data}
+            </if>
+            <if test="condition.password!=null">
+                ${condition.groupOp}   password  ${condition.password.op}  #{condition.password.data}
+            </if>
+            <if test="condition.name!=null">
+                ${condition.groupOp}   name  ${condition.name.op}  #{condition.name.data}
+            </if>
+            <if test="condition.age!=null">
+                ${condition.groupOp}   age  ${condition.age.op}  #{condition.age.data}
+            </if>
+            <if test="condition.sex!=null">
+                ${condition.groupOp}   sex  ${condition.sex.op}  #{condition.sex.data}
+            </if>
+            <if test="condition.birthday!=null">
+                ${condition.groupOp}   birthday  ${condition.birthday.op}  #{condition.birthday.data}
+            </if>
+            <if test="condition.created!=null">
+                ${condition.groupOp}   created  ${condition.created.op}  #{condition.created.data}
+            </if>
+            <if test="condition.updated!=null">
+                ${condition.groupOp}   updated  ${condition.updated.op}  #{condition.updated.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="cn.jshop.ssm.domain.tb.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_user
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="user_name!=null">
+                AND user_name like CONCAT('%', #{user_name} , '%')
+            </if>
+            <if test="password!=null">
+                AND password like CONCAT('%', #{password} , '%')
+            </if>
+            <if test="name!=null">
+                AND name like CONCAT('%', #{name} , '%')
+            </if>
+            <if test="age!=null">
+                AND age like CONCAT('%', #{age} , '%')
+            </if>
+            <if test="sex!=null">
+                AND sex like CONCAT('%', #{sex} , '%')
+            </if>
+            <if test="birthday!=null">
+                AND birthday like CONCAT('%', #{birthday} , '%')
+            </if>
+            <if test="created!=null">
+                AND created like CONCAT('%', #{created} , '%')
+            </if>
+            <if test="updated!=null">
+                AND updated like CONCAT('%', #{updated} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="cn.jshop.ssm.domain.tb.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_user
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.user_name!=null">
+                AND user_name = #{condition.user_name}
+            </if>
+            <if test="condition.password!=null">
+                AND password = #{condition.password}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.birthday!=null">
+                AND birthday = #{condition.birthday}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="cn.jshop.ssm.domain.tb.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_user
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.user_name!=null">
+                AND user_name = #{condition.user_name}
+            </if>
+            <if test="condition.password!=null">
+                AND password = #{condition.password}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.age!=null">
+                AND age = #{condition.age}
+            </if>
+            <if test="condition.sex!=null">
+                AND sex = #{condition.sex}
+            </if>
+            <if test="condition.birthday!=null">
+                AND birthday = #{condition.birthday}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) FROM tb_user
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="user_name!=null">
+               ${groupOp} user_name ${user_name.op}  #{user_name.data}
+           </if>
+           <if test="password!=null">
+               ${groupOp} password ${password.op}  #{password.data}
+           </if>
+           <if test="name!=null">
+               ${groupOp} name ${name.op}  #{name.data}
+           </if>
+           <if test="age!=null">
+               ${groupOp} age ${age.op}  #{age.data}
+           </if>
+           <if test="sex!=null">
+               ${groupOp} sex ${sex.op}  #{sex.data}
+           </if>
+           <if test="birthday!=null">
+               ${groupOp} birthday ${birthday.op}  #{birthday.data}
+           </if>
+           <if test="created!=null">
+               ${groupOp} created ${created.op}  #{created.data}
+           </if>
+           <if test="updated!=null">
+               ${groupOp} updated ${updated.op}  #{updated.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM tb_user
+    </select>
+   
+</mapper>
