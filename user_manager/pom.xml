@@ -40,19 +40,18 @@
             <artifactId>mybatis-spring</artifactId>
         </dependency>
 
+        <!-- 分页助手-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
-            <version>3.7.5</version>
         </dependency>
+
         <dependency>
             <groupId>com.github.jsqlparser</groupId>
             <artifactId>jsqlparser</artifactId>
-            <version>0.9.1</version>
         </dependency>
 
         <!--apache-->
-
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -67,10 +66,6 @@
             <artifactId>slf4j-log4j12</artifactId>
         </dependency>
         <!-- Jackson Json处理工具包 -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>

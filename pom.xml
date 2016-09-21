@@ -10,6 +10,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>user_manager</module>
+        <module>jshop-common</module>
+        <module>jshop-manager</module>
     </modules>
     <!-- 集中定义依赖版本号 -->
     <properties>
@@ -82,6 +84,19 @@
                 <version>${mybatis.spring.version}</version>
             </dependency>
 
+            <!-- 分页助手-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>3.7.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.jsqlparser</groupId>
+                <artifactId>jsqlparser</artifactId>
+                <version>0.9.1</version>
+            </dependency>
+
             <!-- MySql -->
             <dependency>
                 <groupId>mysql</groupId>
@@ -113,11 +128,6 @@
 
 
             <!-- Jackson Json处理工具包 -->
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.alibaba</groupId>
