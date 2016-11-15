@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jshop.manager.dao.item.IItemDescDAO">
+
+    <sql id="Base_Column_List">
+        item_id,
+        item_desc,
+        created,
+        updated
+    </sql>
+    <insert id="insert" parameterType="cn.jshop.manager.domain.item.ItemDesc">
+        INSERT INTO tb_item_desc (
+		    item_id
+		    ,item_desc
+		    ,created
+		    ,updated
+        ) VALUES (
+		    	#{item_id}
+		    	,#{item_desc}
+		    	,#{created}
+		    	,#{updated}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMap" >
+        INSERT INTO tb_item_desc (
+		    item_id
+		    ,item_desc
+		    ,created
+		    ,updated
+        ) VALUES (
+		    	#{map.item_id}
+		    	,#{map.item_desc}
+		    	,#{map.created}
+		    	,#{map.updated}
+        )
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="cn.jshop.manager.domain.item.ItemDesc">
+        UPDATE tb_item_desc
+        <trim prefix="SET" suffixOverrides=",">
+		    item_id=#{item_id},
+		    item_desc=#{item_desc},
+		    created=#{created},
+		    updated=#{updated},
+        </trim>
+        WHERE
+    </update>
+	
+	<update id="updateMap">
+        UPDATE tb_item_desc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.item_id!=null">
+                item_id = #{map.item_id},
+            </if>
+            <if test="map.item_desc!=null">
+                item_desc = #{map.item_desc},
+            </if>
+            <if test="map.created!=null">
+                created = #{map.created},
+            </if>
+            <if test="map.updated!=null">
+                updated = #{map.updated},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE tb_item_desc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.item_id!=null">
+                item_id = #{update.item_id},
+            </if>
+            <if test="update.item_desc!=null">
+                item_desc = #{update.item_desc},
+            </if>
+            <if test="update.created!=null">
+                created = #{update.created},
+            </if>
+            <if test="update.updated!=null">
+                updated = #{update.updated},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.item_id!=null">
+                AND item_id = #{condition.item_id}
+            </if>
+            <if test="condition.item_desc!=null">
+                AND item_desc = #{condition.item_desc}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="cn.jshop.manager.domain.item.ItemDesc">
+        UPDATE tb_item_desc
+        <trim prefix="SET" suffixOverrides=",">
+            item_id = #{item_id},
+            item_desc = #{item_desc},
+            created = #{created},
+            updated = #{updated},
+        </trim>
+        WHERE
+    </update>
+    
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM tb_item_desc
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds">
+        DELETE FROM tb_item_desc
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM tb_item_desc
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="item_id!=null">
+                AND item_id = #{item_id}
+            </if>
+            <if test="item_desc!=null">
+                AND item_desc = #{item_desc}
+            </if>
+            <if test="created!=null">
+                AND created = #{created}
+            </if>
+            <if test="updated!=null">
+                AND updated = #{updated}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM tb_item_desc WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="cn.jshop.manager.domain.item.ItemDesc">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_desc
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemDesc">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_desc WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemDesc">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_desc WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ItemDesc">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_desc
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="cn.jshop.manager.domain.item.ItemDesc">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_desc
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.item_id!=null">
+                ${condition.groupOp}   item_id  ${condition.item_id.op}  #{condition.item_id.data}
+            </if>
+            <if test="condition.item_desc!=null">
+                ${condition.groupOp}   item_desc  ${condition.item_desc.op}  #{condition.item_desc.data}
+            </if>
+            <if test="condition.created!=null">
+                ${condition.groupOp}   created  ${condition.created.op}  #{condition.created.data}
+            </if>
+            <if test="condition.updated!=null">
+                ${condition.groupOp}   updated  ${condition.updated.op}  #{condition.updated.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemDesc">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_desc
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="item_id!=null">
+                AND item_id like CONCAT('%', #{item_id} , '%')
+            </if>
+            <if test="item_desc!=null">
+                AND item_desc like CONCAT('%', #{item_desc} , '%')
+            </if>
+            <if test="created!=null">
+                AND created like CONCAT('%', #{created} , '%')
+            </if>
+            <if test="updated!=null">
+                AND updated like CONCAT('%', #{updated} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemDesc">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_desc
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.item_id!=null">
+                AND item_id = #{condition.item_id}
+            </if>
+            <if test="condition.item_desc!=null">
+                AND item_desc = #{condition.item_desc}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemDesc">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_desc
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.item_id!=null">
+                AND item_id = #{condition.item_id}
+            </if>
+            <if test="condition.item_desc!=null">
+                AND item_desc = #{condition.item_desc}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) FROM tb_item_desc
+       <where>
+           <if test="item_id!=null">
+               ${groupOp} item_id ${item_id.op}  #{item_id.data}
+           </if>
+           <if test="item_desc!=null">
+               ${groupOp} item_desc ${item_desc.op}  #{item_desc.data}
+           </if>
+           <if test="created!=null">
+               ${groupOp} created ${created.op}  #{created.data}
+           </if>
+           <if test="updated!=null">
+               ${groupOp} updated ${updated.op}  #{updated.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM tb_item_desc
+    </select>
+   
+</mapper>

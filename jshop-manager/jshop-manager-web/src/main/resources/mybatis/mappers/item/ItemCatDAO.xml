@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jshop.manager.dao.item.IItemCatDAO">
+
+    <sql id="Base_Column_List">
+        id,
+        parent_id,
+        name,
+        status,
+        sort_order,
+        is_parent,
+        created,
+        updated
+    </sql>
+    <insert id="insert" parameterType="cn.jshop.manager.domain.item.ItemCat">
+        INSERT INTO tb_item_cat (
+		    parent_id
+		    ,name
+		    ,status
+		    ,sort_order
+		    ,is_parent
+		    ,created
+		    ,updated
+        ) VALUES (
+		    	#{parent_id}
+		    	,#{name}
+		    	,#{status}
+		    	,#{sort_order}
+		    	,#{is_parent}
+		    	,#{created}
+		    	,#{updated}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMap" >
+        INSERT INTO tb_item_cat (
+		    parent_id
+		    ,name
+		    ,status
+		    ,sort_order
+		    ,is_parent
+		    ,created
+		    ,updated
+        ) VALUES (
+		    	#{map.parent_id}
+		    	,#{map.name}
+		    	,#{map.status}
+		    	,#{map.sort_order}
+		    	,#{map.is_parent}
+		    	,#{map.created}
+		    	,#{map.updated}
+        )
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="cn.jshop.manager.domain.item.ItemCat">
+        UPDATE tb_item_cat
+        <trim prefix="SET" suffixOverrides=",">
+		    parent_id=#{parent_id},
+		    name=#{name},
+		    status=#{status},
+		    sort_order=#{sort_order},
+		    is_parent=#{is_parent},
+		    created=#{created},
+		    updated=#{updated},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+	
+	<update id="updateMap">
+        UPDATE tb_item_cat
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.parent_id!=null">
+                parent_id = #{map.parent_id},
+            </if>
+            <if test="map.name!=null">
+                name = #{map.name},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+            <if test="map.sort_order!=null">
+                sort_order = #{map.sort_order},
+            </if>
+            <if test="map.is_parent!=null">
+                is_parent = #{map.is_parent},
+            </if>
+            <if test="map.created!=null">
+                created = #{map.created},
+            </if>
+            <if test="map.updated!=null">
+                updated = #{map.updated},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE tb_item_cat
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.parent_id!=null">
+                parent_id = #{update.parent_id},
+            </if>
+            <if test="update.name!=null">
+                name = #{update.name},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+            <if test="update.sort_order!=null">
+                sort_order = #{update.sort_order},
+            </if>
+            <if test="update.is_parent!=null">
+                is_parent = #{update.is_parent},
+            </if>
+            <if test="update.created!=null">
+                created = #{update.created},
+            </if>
+            <if test="update.updated!=null">
+                updated = #{update.updated},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.parent_id!=null">
+                AND parent_id = #{condition.parent_id}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.sort_order!=null">
+                AND sort_order = #{condition.sort_order}
+            </if>
+            <if test="condition.is_parent!=null">
+                AND is_parent = #{condition.is_parent}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="cn.jshop.manager.domain.item.ItemCat">
+        UPDATE tb_item_cat
+        <trim prefix="SET" suffixOverrides=",">
+            parent_id = #{parent_id},
+            name = #{name},
+            status = #{status},
+            sort_order = #{sort_order},
+            is_parent = #{is_parent},
+            created = #{created},
+            updated = #{updated},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+    
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM tb_item_cat
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds">
+        DELETE FROM tb_item_cat
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM tb_item_cat
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="parent_id!=null">
+                AND parent_id = #{parent_id}
+            </if>
+            <if test="name!=null">
+                AND name = #{name}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+            <if test="sort_order!=null">
+                AND sort_order = #{sort_order}
+            </if>
+            <if test="is_parent!=null">
+                AND is_parent = #{is_parent}
+            </if>
+            <if test="created!=null">
+                AND created = #{created}
+            </if>
+            <if test="updated!=null">
+                AND updated = #{updated}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM tb_item_cat WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="cn.jshop.manager.domain.item.ItemCat">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_cat
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemCat">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_cat WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemCat">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_cat WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="ItemCat">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_cat
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="cn.jshop.manager.domain.item.ItemCat">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_cat
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.parent_id!=null">
+                ${condition.groupOp}   parent_id  ${condition.parent_id.op}  #{condition.parent_id.data}
+            </if>
+            <if test="condition.name!=null">
+                ${condition.groupOp}   name  ${condition.name.op}  #{condition.name.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+            </if>
+            <if test="condition.sort_order!=null">
+                ${condition.groupOp}   sort_order  ${condition.sort_order.op}  #{condition.sort_order.data}
+            </if>
+            <if test="condition.is_parent!=null">
+                ${condition.groupOp}   is_parent  ${condition.is_parent.op}  #{condition.is_parent.data}
+            </if>
+            <if test="condition.created!=null">
+                ${condition.groupOp}   created  ${condition.created.op}  #{condition.created.data}
+            </if>
+            <if test="condition.updated!=null">
+                ${condition.groupOp}   updated  ${condition.updated.op}  #{condition.updated.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemCat">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_cat
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="parent_id!=null">
+                AND parent_id like CONCAT('%', #{parent_id} , '%')
+            </if>
+            <if test="name!=null">
+                AND name like CONCAT('%', #{name} , '%')
+            </if>
+            <if test="status!=null">
+                AND status like CONCAT('%', #{status} , '%')
+            </if>
+            <if test="sort_order!=null">
+                AND sort_order like CONCAT('%', #{sort_order} , '%')
+            </if>
+            <if test="is_parent!=null">
+                AND is_parent like CONCAT('%', #{is_parent} , '%')
+            </if>
+            <if test="created!=null">
+                AND created like CONCAT('%', #{created} , '%')
+            </if>
+            <if test="updated!=null">
+                AND updated like CONCAT('%', #{updated} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemCat">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_cat
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.parent_id!=null">
+                AND parent_id = #{condition.parent_id}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.sort_order!=null">
+                AND sort_order = #{condition.sort_order}
+            </if>
+            <if test="condition.is_parent!=null">
+                AND is_parent = #{condition.is_parent}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.ItemCat">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_cat
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.parent_id!=null">
+                AND parent_id = #{condition.parent_id}
+            </if>
+            <if test="condition.name!=null">
+                AND name = #{condition.name}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+            <if test="condition.sort_order!=null">
+                AND sort_order = #{condition.sort_order}
+            </if>
+            <if test="condition.is_parent!=null">
+                AND is_parent = #{condition.is_parent}
+            </if>
+            <if test="condition.created!=null">
+                AND created = #{condition.created}
+            </if>
+            <if test="condition.updated!=null">
+                AND updated = #{condition.updated}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) FROM tb_item_cat
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="parent_id!=null">
+               ${groupOp} parent_id ${parent_id.op}  #{parent_id.data}
+           </if>
+           <if test="name!=null">
+               ${groupOp} name ${name.op}  #{name.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} status ${status.op}  #{status.data}
+           </if>
+           <if test="sort_order!=null">
+               ${groupOp} sort_order ${sort_order.op}  #{sort_order.data}
+           </if>
+           <if test="is_parent!=null">
+               ${groupOp} is_parent ${is_parent.op}  #{is_parent.data}
+           </if>
+           <if test="created!=null">
+               ${groupOp} created ${created.op}  #{created.data}
+           </if>
+           <if test="updated!=null">
+               ${groupOp} updated ${updated.op}  #{updated.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM tb_item_cat
+    </select>
+   
+</mapper>

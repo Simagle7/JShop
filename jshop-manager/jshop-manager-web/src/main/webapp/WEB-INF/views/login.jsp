@@ -21,17 +21,17 @@
     <div>
         <div>
 
-            <h1 class="logo-name">S+</h1>
+            <h1 class="logo-name">H+</h1>
 
         </div>
-        <h3>欢迎使用 JShop管理平台</h3>
+        <h3>欢迎使用JShop商城后台管理系统</h3>
 
-        <form class="m-t" role="form" action="http://www.zi-han.net/theme/hplus/index.html">
+        <form class="m-t" role="form" action="/rest/page/index" method="get">
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="用户名" required="">
+                <input  class="form-control" placeholder="用户名" required name="username">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="密码" required="">
+                <input type="password" class="form-control" placeholder="密码" required name="password">
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
 
@@ -46,21 +46,8 @@
         </form>
     </div>
 </div>
-<script src="js/jquery.min.js?v=2.1.4"></script>
-<script src="js/bootstrap.min.js?v=3.3.6"></script>
-<%--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>--%>
-<script type="text/javascript">
-    $("#login").click(function () {
-        var username = $("[name=username]").val();
-        var password = $("[name=password]").val();
-
-        if (username != "admin" || password != "admin") {
-            $.messager.alert('错误', "用户名密码不正确！");
-            return;
-        }
-        window.location.href = "/rest/page/index";
-    });
-</script>
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
 </body>
 
 

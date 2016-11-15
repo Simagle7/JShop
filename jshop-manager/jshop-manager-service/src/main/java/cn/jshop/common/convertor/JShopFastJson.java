@@ -1,5 +1,7 @@
 package cn.jshop.common.convertor;
 
+import cn.jshop.common.sys.ResponseT;
+import cn.jshop.common.utils.RtnCodeEnum;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.http.HttpInputMessage;
@@ -73,8 +75,14 @@ public class JShopFastJson<T> extends AbstractHttpMessageConverter<T> {
     }
     @Override
     protected void writeInternal(T t, HttpOutputMessage httpOutputMessage) throws IOException, HttpMessageNotWritableException {
+//        OutputStream out = httpOutputMessage.getBody();
+//        String text = JSON.toJSONString(t, this.features);
+//        byte[] bytes = text.getBytes(this.charset);
+//        out.write(bytes);
+        ResponseT<T> response = new ResponseT<T>(RtnCodeEnum.SUCCESS);
+        response.setBizData(t);
         OutputStream out = httpOutputMessage.getBody();
-        String text = JSON.toJSONString(t, this.features);
+        String text = JSON.toJSONString(response, this.features);
         byte[] bytes = text.getBytes(this.charset);
         out.write(bytes);
     }

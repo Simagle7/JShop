@@ -14,23 +14,7 @@
 	</bean>
 
 	<!-- 定义事务策略 -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<!--所有以query开头的方法都是只读的 -->
-			<tx:method name="query*" read-only="true" />
-			<!--其他方法使用默认事务策略 -->
-			<tx:method name="*" />
-		</tx:attributes>
-	</tx:advice>
 
-	<aop:config>
-		<!--pointcut元素定义一个切入点，execution中的第一个星号 用以匹配方法的返回类型，
-			这里星号表明匹配所有返回类型。 com.abc.dao.*.*(..)表明匹配cn.itcast.mybatis.service包下的所有类的所有
-			方法 -->
-		<aop:pointcut id="myPointcut" expression="execution(* cn.jshop.manager.service.*.*(..))" />
-		<!--将定义好的事务处理策略应用到上述的切入点 -->
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut" />
-	</aop:config>
 	<!-- 开启事务注解驱动 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	<!--配置aop-->
@@ -39,34 +23,27 @@
 		<aop:advisor pointcut-ref="serviceMehtod" advice-ref="txAdvice" />
 	</aop:config>
 
-	<!--&lt;!&ndash;事务增强&ndash;&gt;-->
-	<!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
-		<!--<tx:attributes>-->
-			<!--<tx:method name="delete*" propagation="REQUIRED" read-only="false"-->
-					   <!--rollback-for="java.lang.Exception"/>-->
-			<!--<tx:method name="insert*" propagation="REQUIRED" read-only="false"-->
-					   <!--rollback-for="java.lang.RuntimeException" />-->
-			<!--<tx:method name="update*" propagation="REQUIRED" read-only="false"-->
-					   <!--rollback-for="java.lang.Exception" />-->
-			<!--<tx:method name="add*" propagation="REQUIRED" read-only="false"-->
-					   <!--rollback-for="java.lang.Exception" />-->
+	<!--事务增强-->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"
+					   rollback-for="java.lang.Exception"/>
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false"
+					   rollback-for="java.lang.RuntimeException" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false"
+					   rollback-for="java.lang.Exception" />
+			<tx:method name="add*" propagation="REQUIRED" read-only="false"
+					   rollback-for="java.lang.Exception" />
 
-			<!--<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>-->
-			<!--<tx:method name="query*" propagation="REQUIRED" read-only="true"/>-->
-			<!--<tx:method name="count*" propagation="SUPPORTS" read-only="true"/>-->
-			<!--<tx:method name="get*" propagation="SUPPORTS" read-only="true"/>-->
-			<!--<tx:method name="select*" propagation="SUPPORTS" read-only="true"/>-->
-			<!--<tx:method name="is*" propagation="SUPPORTS" read-only="true" />-->
-		<!--</tx:attributes>-->
-	<!--</tx:advice>-->
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+			<tx:method name="query*" propagation="REQUIRED" read-only="true"/>
+			<tx:method name="count*" propagation="SUPPORTS" read-only="true"/>
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+			<tx:method name="is*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
 
 
-	<!--<aop:config>-->
-		<!--&lt;!&ndash;pointcut元素定义一个切入点，execution中的第一个星号 用以匹配方法的返回类型，-->
-			<!--这里星号表明匹配所有返回类型。 com.abc.dao.*.*(..)表明匹配cn.itcast.mybatis.service包下的所有类的所有-->
-			<!--方法 &ndash;&gt;-->
-		<!--<aop:pointcut id="myPointcut" expression="execution(* cn.jshop.ssm.service.*.*(..))" />-->
-		<!--&lt;!&ndash;将定义好的事务处理策略应用到上述的切入点 &ndash;&gt;-->
-		<!--<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut" />-->
-	<!--</aop:config>-->
+
 </beans>
