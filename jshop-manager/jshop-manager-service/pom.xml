@@ -65,6 +65,11 @@
             <artifactId>shiro-ehcache</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+        </dependency>
+
         <!-- ehcache 缓存框架 -->
         <dependency>
             <groupId>net.sf.ehcache</groupId>

@@ -1,0 +1,50 @@
+package cn.jshop.manager.service.upload;
+
+import cn.jshop.common.exception.BizException;
+import cn.jshop.common.utils.CommonUtils;
+import cn.jshop.common.utils.ERRORCODE;
+import cn.jshop.common.utils.ftp.FtpUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Date;
+
+/**
+ * Created by 郭旭辉 on 2016/11/22.
+ * 上传接口实现类
+ */
+@Service("IUploadServiceImpl")
+public class IUploadServiceImpl implements IUploadService {
+
+    @Value("${FTP_ADDRESS}")
+    private String FTP_ADDRESS;
+    @Value("${FTP_PORT}")
+    private int FTP_PORT;
+    @Value("${FTP_USERNAME}")
+    private String FTP_USERNAME;
+    @Value("${FTP_PASSWORD}")
+    private String FTP_PASSWORD;
+    @Value("${FT_BASE_URL}")
+    private String FT_BASE_URL;
+    @Value("${IMG_BASE_PATH}")
+    private String IMG_BASE_PATH;
+
+
+    @Override
+    public String uploadImg(MultipartFile file) throws IOException {
+        //生成一个新的文件名，取原始文件名
+        String oldName = file.getOriginalFilename();
+
+        //生成新的文件名
+        String newName = CommonUtils.genImageName();
+        newName += oldName.substring(oldName.lastIndexOf("."));
+        String filePath = "/" + CommonUtils.datetoString(new Date(), "yyyy/MM/dd");
+        boolean flag = FtpUtils.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_PASSWORD, filePath, newName, file.getInputStream());
+        if (flag) {
+            return IMG_BASE_PATH + filePath + newName;
+        }
+        throw new BizException(ERRORCODE.UPLOAD_IMG_ERROR.getCode(), ERRORCODE.UPLOAD_IMG_ERROR.getMessage());
+    }
+}

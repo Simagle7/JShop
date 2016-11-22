@@ -22,7 +22,9 @@ public enum ERRORCODE {
     VERIFIEDCODE_ILLEGAL("0100012","该验证码不合法"),
     CATEGORY_EXIST("0100013", "分类名称已存在"),
     TOKEN_INVALID("0100014", "凭证已过期"),
-    ITEM_EXISTS("0100015","商品已存在");
+    ITEM_EXISTS("0100015","商品已存在"),
+    UPLOAD_IMG_ERROR("0100016","上传图片失败")
+    ;
     ;
 
     /**

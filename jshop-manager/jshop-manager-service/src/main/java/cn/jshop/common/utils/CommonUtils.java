@@ -15,6 +15,9 @@ import java.util.*;
  */
 public class CommonUtils {
 
+    private CommonUtils() {
+    }
+
     /**
      * 获取无“-”的UUID
      *
@@ -105,6 +108,30 @@ public class CommonUtils {
         calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
         map.put("monthL", format.format(calendar.getTime()));
         return map;
+    }
+
+    /**
+     * 获取字符串类型的日期
+     * @param date  待转化的日期
+     * @param reg   转化的格式 如：yyyy/MM/dd
+     * @return  返回，字符串格式的日期
+     */
+    public static String datetoString(Date date, String reg){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(reg);
+        return simpleDateFormat.format(date);
+    }
+    /**
+     * 图片名生成
+     */
+    public static String genImageName() {
+        //取当前时间的长整形值包含毫秒
+        long millis = System.currentTimeMillis();
+        //long millis = System.nanoTime();
+        //加上三位随机数
+        Random random = new Random();
+        int end3 = random.nextInt(999);
+        //如果不足三位前面补0
+        return millis + String.format("%03d", end3);
     }
 
 
