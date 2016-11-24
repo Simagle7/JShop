@@ -59,6 +59,8 @@ public class FtpUtils {
             }
             //设置上传文件的类型为二进制类型
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
+            //设置文件名的编码为utf-8
+            ftp.setControlEncoding("UTF-8");
             //上传文件
             if (!ftp.storeFile(filename, input)) {
                 return false;
@@ -129,8 +131,8 @@ public class FtpUtils {
     }
     public static void main(String[] args) {
         try {
-            FileInputStream in=new FileInputStream(new File("D:\\temp\\image\\gaigeming.jpg"));
-            boolean flag = uploadFile("192.168.25.133", 21, "ftpuser", "ftpuser", "/home/ftpuser/www/images","/2015/01/21", "gaigeming.jpg", in);
+            FileInputStream in=new FileInputStream(new File("D:\\1.jpeg"));
+            boolean flag = uploadFile("192.168.106.128", 21, "ftpuser", "cao784137.", "/home/ftpuser/www/images","/2015/01/21", "gaigeming2.jpg", in);
             System.out.println(flag);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

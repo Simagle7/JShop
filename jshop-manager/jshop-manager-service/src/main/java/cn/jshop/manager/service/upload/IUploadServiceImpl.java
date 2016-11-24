@@ -26,8 +26,8 @@ public class IUploadServiceImpl implements IUploadService {
     private String FTP_USERNAME;
     @Value("${FTP_PASSWORD}")
     private String FTP_PASSWORD;
-    @Value("${FT_BASE_URL}")
-    private String FT_BASE_URL;
+    @Value("${FTP_BASE_URL}")
+    private String FTP_BASE_URL;
     @Value("${IMG_BASE_PATH}")
     private String IMG_BASE_PATH;
 
@@ -41,9 +41,9 @@ public class IUploadServiceImpl implements IUploadService {
         String newName = CommonUtils.genImageName();
         newName += oldName.substring(oldName.lastIndexOf("."));
         String filePath = "/" + CommonUtils.datetoString(new Date(), "yyyy/MM/dd");
-        boolean flag = FtpUtils.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_PASSWORD, filePath, newName, file.getInputStream());
+        boolean flag = FtpUtils.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_URL, filePath, newName, file.getInputStream());
         if (flag) {
-            return IMG_BASE_PATH + filePath + newName;
+            return IMG_BASE_PATH + filePath + "/" + newName;
         }
         throw new BizException(ERRORCODE.UPLOAD_IMG_ERROR.getCode(), ERRORCODE.UPLOAD_IMG_ERROR.getMessage());
     }

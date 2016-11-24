@@ -22,6 +22,6 @@ public class UploadController {
     @ResponseBody
     @RequestMapping(value = "/img")
     public String uploadImages(MultipartFile file) throws IOException {
-        return uploadService.uploadImg(file);
+            return uploadService.uploadImg(file);
     }
 }
