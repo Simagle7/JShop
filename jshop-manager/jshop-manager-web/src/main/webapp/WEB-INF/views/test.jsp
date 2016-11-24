@@ -68,7 +68,7 @@
             BeforeUpload:function(up,file){
 
 //重点在这里，上传的时候自定义参数信息
-                uploader.setOption("multipart_params",{"apptype":1,"id":1,"fileType":map[file.id]});
+//                uploader.setOption("multipart_params",{"apptype":1,"id":1,"fileType":map[file.id]});
             },
             FileUploaded:function(up,file){
                 $("#"+file.id+"btn").parent().html("上传完毕");
@@ -85,8 +85,8 @@
 //                    return false;
 //                }
                 plupload.each(files,function(file) {
-                    map[file.id]=$("#fileType").val();
-                    $("#uploadTable").append("<tr id='"+file.id+"tr'><td>"+$("#fileType").val()+"</td><td>"+file.name+"</td><td><button type='button' id='"+file.id+"btn' onclick=del('"+file.id+"')>删除</button> </td><td id='"+file.id+"_progress'></td></tr>");
+//                    map[file.id]=$("#fileType").val();
+//                    $("#uploadTable").append("<tr id='"+file.id+"tr'><td>"+$("#fileType").val()+"</td><td>"+file.name+"</td><td><button type='button' id='"+file.id+"btn' onclick=del('"+file.id+"')>删除</button> </td><td id='"+file.id+"_progress'></td></tr>");
                 });
             },
             UploadProgress : function(up, file) {
