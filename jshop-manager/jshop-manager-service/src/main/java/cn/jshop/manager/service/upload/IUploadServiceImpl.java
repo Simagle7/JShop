@@ -2,8 +2,10 @@ package cn.jshop.manager.service.upload;
 
 import cn.jshop.common.exception.BizException;
 import cn.jshop.common.utils.CommonUtils;
+import cn.jshop.common.utils.DataStatusEnum;
 import cn.jshop.common.utils.ERRORCODE;
 import cn.jshop.common.utils.ftp.FtpUtils;
+import cn.jshop.manager.domain.item.FtpFileDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +45,13 @@ public class IUploadServiceImpl implements IUploadService {
         String filePath = "/" + CommonUtils.datetoString(new Date(), "yyyy/MM/dd");
         boolean flag = FtpUtils.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_URL, filePath, newName, file.getInputStream());
         if (flag) {
+            FtpFileDto ftpFileDto = new FtpFileDto();
+            ftpFileDto.setRemotePath(FTP_BASE_URL);
+            ftpFileDto.setFilePath(filePath);
+            ftpFileDto.setFileName(newName);
+            ftpFileDto.setStatus(DataStatusEnum.DISABLED.getValue());
+            //todo 将状态关系插入表中
+
             return IMG_BASE_PATH + filePath + "/" + newName;
         }
         throw new BizException(ERRORCODE.UPLOAD_IMG_ERROR.getCode(), ERRORCODE.UPLOAD_IMG_ERROR.getMessage());

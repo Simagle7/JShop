@@ -60,8 +60,10 @@
                         </tr>
                         <tr>
                             <th><span class="pull-right">图片：</span></th>
-                            <td colspan="3">
-                                <button rel="popover" id="addImages" type="button" class="btn btn-info">添加图片</button>
+                            <td colspan="3" id="itemImg" style="height: 111px">
+                                <%--<button rel="popover" id="addImages" type="button" class="btn btn-info">添加图片</button>--%>
+                                <%--<button type="button" id="addImages" class="btn btn-info dim"><i class="fa fa-upload"></i></button>--%>
+                                <button type="button" id="addImages" class="pull-right btn btn-info"><i class="fa fa-upload"></i></button>
                             </td>
                         </tr>
                         <tr>

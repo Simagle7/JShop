@@ -12,18 +12,20 @@ import java.io.*;
  * ftp工具类
  */
 public class FtpUtils {
-    private FtpUtils() {}
+    private FtpUtils() {
+    }
 
     /**
      * Description: 向FTP服务器上传文件
-     * @param host FTP服务器hostname
-     * @param port FTP服务器端口
+     *
+     * @param host     FTP服务器hostname
+     * @param port     FTP服务器端口
      * @param username FTP登录账号
      * @param password FTP登录密码
      * @param basePath FTP服务器基础目录
      * @param filePath FTP服务器文件存放路径。例如分日期存放：/2015/01/01。文件的路径为basePath+filePath
      * @param filename 上传到FTP服务器上的文件名
-     * @param input 输入流
+     * @param input    输入流
      * @return 成功返回true，否则返回false
      */
     public static boolean uploadFile(String host, int port, String username, String password, String basePath,
@@ -41,7 +43,7 @@ public class FtpUtils {
                 return false;
             }
             //切换到上传目录
-            if (!ftp.changeWorkingDirectory(basePath+filePath)) {
+            if (!ftp.changeWorkingDirectory(basePath + filePath)) {
                 //如果目录不存在创建目录
                 String[] dirs = filePath.split("/");
                 String tempPath = basePath;
@@ -80,16 +82,18 @@ public class FtpUtils {
         }
         return result;
     }
+
     /**
      * Description: 从FTP服务器下载文件
-     * @param host FTP服务器hostname
-     * @param port FTP服务器端口
-     * @param username FTP登录账号
-     * @param password FTP登录密码
+     *
+     * @param host       FTP服务器hostname
+     * @param port       FTP服务器端口
+     * @param username   FTP登录账号
+     * @param password   FTP登录密码
      * @param remotePath FTP服务器上的相对路径
-     * @param fileName 要下载的文件名
-     * @param localPath 下载后保存到本地的路径
-     * @return
+     * @param fileName   要下载的文件名
+     * @param localPath  下载后保存到本地的路径
+     * @return  返回，true：下载成功，false：下载失败
      */
     public static boolean downloadFile(String host, int port, String username, String password, String remotePath,
                                        String fileName, String localPath) {
@@ -129,12 +133,58 @@ public class FtpUtils {
         }
         return result;
     }
+
+    /**
+     * 删除文件
+     * @param host       FTP服务器hostname
+     * @param port       FTP服务器端口
+     * @param username   FTP登录账号
+     * @param password   FTP登录密码
+     * @param remotePath FTP服务器上的相对路径
+     * @param fileName   要下载的文件名
+     * @return  返回，true：删除成功，false：删除失败
+     */
+    public static boolean removeFile(String host, int port, String username, String password, String remotePath,
+                                     String filePath, String fileName) {
+        boolean result = false;
+        FTPClient ftp = new FTPClient();
+        try {
+            int reply;
+            ftp.connect(host, port);
+            // 如果采用默认端口，可以使用ftp.connect(host)的方式直接连接FTP服务器
+            ftp.login(username, password);// 登录
+            reply = ftp.getReplyCode();
+            if (!FTPReply.isPositiveCompletion(reply)) {
+                ftp.disconnect();
+                return false;
+            }
+            String workingPath = remotePath + filePath;
+            ftp.changeWorkingDirectory(workingPath);// 转移到FTP服务器目录
+            if (!ftp.deleteFile( fileName)) {
+                return false;
+            }
+            ftp.logout();
+            result = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (ftp.isConnected()) {
+                try {
+                    ftp.disconnect();
+                } catch (IOException ignored) {
+                }
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         try {
-            FileInputStream in=new FileInputStream(new File("D:\\1.jpeg"));
-            boolean flag = uploadFile("192.168.106.128", 21, "ftpuser", "cao784137.", "/home/ftpuser/www/images","/2015/01/21", "gaigeming2.jpg", in);
+            FileInputStream in=new FileInputStream(new File("D:\\1480258747.jpg"));
+            boolean flag = uploadFile("192.168.106.129", 21, "ftpuser", "cao784137.", "/home/ftpuser/www/images","/2015/01/21", "gaigeming3.jpg", in);
+//            boolean flag = removeFile("192.168.106.129", 21, "ftpuser", "cao784137.", "/home/ftpuser/www/images", "/2015/01/21", "gaigeming3.jpg");
             System.out.println(flag);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

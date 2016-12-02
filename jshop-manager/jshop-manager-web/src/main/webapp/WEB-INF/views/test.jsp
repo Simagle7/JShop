@@ -48,14 +48,14 @@
         url : '/rest/upload/img', //服务器端的上传页面地址
         flash_swf_url : 'lib/plupload/Moxie.swf', //swf文件，当需要使用swf方式进行上传时需要配置该参数
         silverlight_xap_url : 'lib/plupload/Moxie.xap', //silverlight文件，当需要使用silverlight方式进行上传时需要配置该参数
-        chunk_size:"200kb",
+        chunk_size:"1m",
         multi_selection:true,
-        unique_names:true,
+//        unique_names:true,
         filters : {
             max_file_size : '5mb',
             mime_types : [ {
                 title : "图片类型",
-                extensions : "jpg,gif,png"
+                extensions : "jpg,jpeg,gif,png"
             } ]
         },
         init : {
