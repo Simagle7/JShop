@@ -5,7 +5,9 @@ import cn.jshop.common.utils.CommonUtils;
 import cn.jshop.common.utils.DataStatusEnum;
 import cn.jshop.common.utils.ERRORCODE;
 import cn.jshop.common.utils.ftp.FtpUtils;
-import cn.jshop.manager.domain.item.FtpFileDto;
+import cn.jshop.manager.dao.base.IFtpFileDAO;
+import cn.jshop.manager.domain.base.FtpFile;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,8 @@ public class IUploadServiceImpl implements IUploadService {
     @Value("${IMG_BASE_PATH}")
     private String IMG_BASE_PATH;
 
+    @Autowired
+    private IFtpFileDAO ftpFileDAO;
 
     @Override
     public String uploadImg(MultipartFile file) throws IOException {
@@ -45,13 +49,12 @@ public class IUploadServiceImpl implements IUploadService {
         String filePath = "/" + CommonUtils.datetoString(new Date(), "yyyy/MM/dd");
         boolean flag = FtpUtils.uploadFile(FTP_ADDRESS, FTP_PORT, FTP_USERNAME, FTP_PASSWORD, FTP_BASE_URL, filePath, newName, file.getInputStream());
         if (flag) {
-            FtpFileDto ftpFileDto = new FtpFileDto();
-            ftpFileDto.setRemotePath(FTP_BASE_URL);
-            ftpFileDto.setFilePath(filePath);
-            ftpFileDto.setFileName(newName);
-            ftpFileDto.setStatus(DataStatusEnum.DISABLED.getValue());
-            //todo 将状态关系插入表中
-
+            FtpFile ftpFile = new FtpFile();
+            ftpFile.setRemotePath(FTP_BASE_URL);
+            ftpFile.setFilePath(filePath);
+            ftpFile.setFileName(newName);
+            ftpFile.setStatus(DataStatusEnum.DISABLED.getValue());
+            ftpFileDAO.insert(ftpFile);
             return IMG_BASE_PATH + filePath + "/" + newName;
         }
         throw new BizException(ERRORCODE.UPLOAD_IMG_ERROR.getCode(), ERRORCODE.UPLOAD_IMG_ERROR.getMessage());

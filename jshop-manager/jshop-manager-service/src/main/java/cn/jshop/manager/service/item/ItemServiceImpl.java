@@ -20,9 +20,11 @@ package cn.jshop.manager.service.item;
 
 import cn.jshop.common.domain.AccountDto;
 import cn.jshop.common.exception.BizException;
+import cn.jshop.common.utils.DataStatusEnum;
 import cn.jshop.common.utils.ERRORCODE;
 import cn.jshop.common.utils.RETURNCODE;
 import cn.jshop.manager.dao.IJShopBaseDAO;
+import cn.jshop.manager.dao.base.IFtpFileDAO;
 import cn.jshop.manager.dao.item.IItemDAO;
 import cn.jshop.manager.dao.item.IItemDescDAO;
 import cn.jshop.manager.domain.item.Item;
@@ -33,7 +35,9 @@ import cn.jshop.manager.service.AbstractJShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 《商品》 业务逻辑服务类
@@ -46,6 +50,8 @@ public class ItemServiceImpl extends AbstractJShopService<IJShopBaseDAO<Item>, I
     private IItemDAO itemDAO;
     @Autowired
     private IItemDescDAO itemDescDAO;
+    @Autowired
+    private IFtpFileDAO ftpFileDao;
 
     @Override
     public IJShopBaseDAO<Item> getDao() {
@@ -65,10 +71,18 @@ public class ItemServiceImpl extends AbstractJShopService<IJShopBaseDAO<Item>, I
         item.setNum(paramEx.getNum());
         String price = String.valueOf(paramEx.getPriceView()*1000);
         item.setPrice(Long.valueOf(price.substring(0,price.lastIndexOf("."))));
+        item.setImage(paramEx.getImage());
         item.setCreator(accountDto.getUid());
         item.setCreateDate(System.currentTimeMillis());
         item.setStatus(1);
         if(this.insert(item)> 0){
+            //更新图片状态
+            String[] imagesUrl = paramEx.getImage().split(",");
+            List<String> imgNames = new ArrayList<>(imagesUrl.length);
+            for (String url : imagesUrl){
+                imgNames.add(url.substring(url.lastIndexOf("/")+1));
+            }
+            ftpFileDao.updateStatus(imgNames, DataStatusEnum.ENABLED.getValue());
             ItemDesc itemDesc = new ItemDesc();
             itemDesc.setItem_desc(paramEx.getDescription());
             itemDesc.setItem_id(item.getId());

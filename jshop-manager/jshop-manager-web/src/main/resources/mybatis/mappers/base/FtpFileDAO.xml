@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jshop.manager.dao.base.IFtpFileDAO">
+
+    <sql id="Base_Column_List">
+        remotePath,
+        filePath,
+        fileName,
+        status
+    </sql>
+    <insert id="insert" parameterType="cn.jshop.manager.domain.base.FtpFile">
+        INSERT INTO tb_base_ftpFile (
+		    remotePath
+		    ,filePath
+		    ,fileName
+		    ,status
+        ) VALUES (
+		    	#{remotePath}
+		    	,#{filePath}
+		    	,#{fileName}
+		    	,#{status}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMap" >
+        INSERT INTO tb_base_ftpFile (
+		    remotePath
+		    ,filePath
+		    ,fileName
+		    ,status
+        ) VALUES (
+		    	#{map.remotePath}
+		    	,#{map.filePath}
+		    	,#{map.fileName}
+		    	,#{map.status}
+        )
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="cn.jshop.manager.domain.base.FtpFile">
+        UPDATE tb_base_ftpFile
+        <trim prefix="SET" suffixOverrides=",">
+		    remotePath=#{remotePath},
+		    filePath=#{filePath},
+		    fileName=#{fileName},
+		    status=#{status},
+        </trim>
+        WHERE
+    </update>
+	
+	<update id="updateMap">
+        UPDATE tb_base_ftpFile
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.remotePath!=null">
+                remotePath = #{map.remotePath},
+            </if>
+            <if test="map.filePath!=null">
+                filePath = #{map.filePath},
+            </if>
+            <if test="map.fileName!=null">
+                fileName = #{map.fileName},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE tb_base_ftpFile
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.remotePath!=null">
+                remotePath = #{update.remotePath},
+            </if>
+            <if test="update.filePath!=null">
+                filePath = #{update.filePath},
+            </if>
+            <if test="update.fileName!=null">
+                fileName = #{update.fileName},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.remotePath!=null">
+                AND remotePath = #{condition.remotePath}
+            </if>
+            <if test="condition.filePath!=null">
+                AND filePath = #{condition.filePath}
+            </if>
+            <if test="condition.fileName!=null">
+                AND fileName = #{condition.fileName}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="cn.jshop.manager.domain.base.FtpFile">
+        UPDATE tb_base_ftpFile
+        <trim prefix="SET" suffixOverrides=",">
+            remotePath = #{remotePath},
+            filePath = #{filePath},
+            fileName = #{fileName},
+            status = #{status},
+        </trim>
+        WHERE
+    </update>
+    
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM tb_base_ftpFile
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds">
+        DELETE FROM tb_base_ftpFile
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM tb_base_ftpFile
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="remotePath!=null">
+                AND remotePath = #{remotePath}
+            </if>
+            <if test="filePath!=null">
+                AND filePath = #{filePath}
+            </if>
+            <if test="fileName!=null">
+                AND fileName = #{fileName}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM tb_base_ftpFile WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="cn.jshop.manager.domain.base.FtpFile">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_base_ftpFile
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.base.FtpFile">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_base_ftpFile WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.base.FtpFile">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_base_ftpFile WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="FtpFile">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_base_ftpFile
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="cn.jshop.manager.domain.base.FtpFile">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_base_ftpFile
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.remotePath!=null">
+                ${condition.groupOp}   remotePath  ${condition.remotePath.op}  #{condition.remotePath.data}
+            </if>
+            <if test="condition.filePath!=null">
+                ${condition.groupOp}   filePath  ${condition.filePath.op}  #{condition.filePath.data}
+            </if>
+            <if test="condition.fileName!=null">
+                ${condition.groupOp}   fileName  ${condition.fileName.op}  #{condition.fileName.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.base.FtpFile">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_base_ftpFile
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="remotePath!=null">
+                AND remotePath like CONCAT('%', #{remotePath} , '%')
+            </if>
+            <if test="filePath!=null">
+                AND filePath like CONCAT('%', #{filePath} , '%')
+            </if>
+            <if test="fileName!=null">
+                AND fileName like CONCAT('%', #{fileName} , '%')
+            </if>
+            <if test="status!=null">
+                AND status like CONCAT('%', #{status} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.base.FtpFile">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_base_ftpFile
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.remotePath!=null">
+                AND remotePath = #{condition.remotePath}
+            </if>
+            <if test="condition.filePath!=null">
+                AND filePath = #{condition.filePath}
+            </if>
+            <if test="condition.fileName!=null">
+                AND fileName = #{condition.fileName}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.base.FtpFile">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_base_ftpFile
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.remotePath!=null">
+                AND remotePath = #{condition.remotePath}
+            </if>
+            <if test="condition.filePath!=null">
+                AND filePath = #{condition.filePath}
+            </if>
+            <if test="condition.fileName!=null">
+                AND fileName = #{condition.fileName}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) FROM tb_base_ftpFile
+       <where>
+           <if test="remotePath!=null">
+               ${groupOp} remotePath ${remotePath.op}  #{remotePath.data}
+           </if>
+           <if test="filePath!=null">
+               ${groupOp} filePath ${filePath.op}  #{filePath.data}
+           </if>
+           <if test="fileName!=null">
+               ${groupOp} fileName ${fileName.op}  #{fileName.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} status ${status.op}  #{status.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM tb_base_ftpFile
+    </select>
+   
+</mapper>

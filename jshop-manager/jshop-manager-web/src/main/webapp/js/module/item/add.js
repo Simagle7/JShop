@@ -40,7 +40,6 @@ var uploader = new plupload.Uploader({
             var $imgDom = $("#addImages");
             var id = new Date().getTime();
             $imgDom.before("<div class='pull-left img-box' rel='popover' id='" + id + "' ><div class='img-content'><img src='" + imgPath + "' alt='上传失败'/></div><div class='img-close-btn'><i class='fa fa-times-circle-o'></i></div></div>");
-            //  $imgDom.before("<div rel='popover' id='" + id + "' class='pull-left img-box'><img src='" + imgPath + "' alt='上传失败'/></div><div class='img-close-btn'><i class='fa fa-times-circle-o'></i></div>");
 
         },
         'Error': function (up, err, errTip) {
@@ -101,9 +100,22 @@ uploader.init();
 
 
 //预览图片
-$(document).on("click", ".img-content", function () {
+// $(document).on("click", ".img-content", function () {
+//     // var $imgDom = $($(this).children(this).get(0));
+//     var $imgDom = $(this).parent();
+//     console.log($imgDom);
+//     var id = "#" + $imgDom.attr("id");
+//     var imgPath = $imgDom.find("img").attr("src");
+//     console.log(id, imgPath);
+//     $(id).popover({
+//         html: true,
+//         content: "<img src='" + imgPath + "' alt='预览失败' class='preview-img'/>",
+//         template: '<div class="popover"><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content" style="padding: 0"><p></p></div></div></div>'
+//     });
+// });
+$(document).on("click", ".img-box", function () {
     // var $imgDom = $($(this).children(this).get(0));
-    var $imgDom = $(this).parent();
+    var $imgDom = $(this);
     console.log($imgDom);
     var id = "#" + $imgDom.attr("id");
     var imgPath = $imgDom.find("img").attr("src");
@@ -117,8 +129,8 @@ $(document).on("click", ".img-content", function () {
 
 //移除图片
 $(document).on("click", ".img-close-btn", function (event) {
+    event.stopPropagation();
     $(this).parent().remove();//移除当前点击元素的父元素
-    // event.stopPropagation();
 });
 
 //添加商品
@@ -128,9 +140,17 @@ var addItem = function () {
         if (isNull(cid)) {
             swal({title: "请选择分类", text: "未选择任何分类！", type: "error"});
         }
+        var img = [];
+        $("#itemImg img").each(function (index, element) {
+            var src = $(element).attr('src');
+            img.push(src);
+        });
+        var image = img.join(",");
+        console.log(image);
         var data = $("#addItem").serialize();
         var description = editor.$txt.html();
         data += "&description=" + description;
+        data += "&image=" + image;
         console.log(data);
         $.ajax({
             url: 'saveItem',
