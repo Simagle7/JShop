@@ -7,9 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -88,7 +85,7 @@
                         <div class="example">
                             <div>
                                 <form action="">
-                                    <span><b>名称：</b></span>
+                                    <span><b>标题：</b></span>
                                     <label class="search-label"><input class="form-control input-outline" type="text"
                                                                        name="name"></label>
                                     <span><b>编号：</b></span>
@@ -117,64 +114,61 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table table-bordered" style="margin-bottom: 0">
+                        <table class="table table-bordered" style="margin-bottom: 0;table-layout:fixed;">
                             <thead>
                             <tr>
-                                <th width="2%"><input type="checkbox"></th>
-                                <th width="8%">姓名</th>
-                                <th width="10%">账号</th>
-                                <th width="7%">工号</th>
-                                <th width="10%">职务</th>
-                                <th width="20%">主治</th>
-                                <th width="15%">医生代码</th>
+                                <th width="3%"><input type="checkbox"></th>
+                                <th width="19%">标题</th>
+                                <th width="10%">价格</th>
+                                <th width="6%">库存</th>
+                                <th width="10%">条形码</th>
+                                <th width="25%">卖点</th>
                                 <th width="8%">状态</th>
                                 <th width="20%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <%--<c:forEach items="${data.rows}" var="el">--%>
-                                <%--<tr>--%>
-                                    <%--<td><input type="checkbox" name="id" value="<c:out value='${el.id}'/>"></td>--%>
-                                    <%--<td><c:out value="${el.name}" /></td>--%>
-                                    <%--<td><c:out value="${el.username}" /></td>--%>
-                                    <%--<td><c:out value="${el.jobNumber}" /></td>--%>
-                                    <%--<td><c:out value="${el.position}" /></td>--%>
-                                    <%--<td><c:out value="${el.major}" /></td>--%>
-                                    <%--<td><c:out value="${el.code}" /></td>--%>
-                                    <%--<td>--%>
-                                        <%--<c:if test="${el.status == 0}">--%>
-                                            <%--<span class="status status-info"><i class="fa fa-check"></i>正常</span>--%>
-                                        <%--</c:if>--%>
-                                        <%--<c:if test="${el.status == 1}">--%>
-                                            <%--<span class="status status-warning"><i class="fa fa-times"></i>停职</span>--%>
-                                        <%--</c:if>--%>
-                                    <%--</td>--%>
-                                    <%--<td>--%>
-                                        <%--<button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadData(<c:out value="${el.id}"/>)">修改</button>--%>
-                                            <%--&lt;%&ndash;<a href="queryOne?id=<c:out value="${el.id}"/>" style="color: #ffffff">修改</a></button>&ndash;%&gt;--%>
-                                        <%--<div class="modal inmodal in" id="update" tabindex="-1" role="dialog"--%>
-                                             <%--aria-hidden="true" style="display: none;">--%>
+                            <c:forEach items="${data.rows}" var="el">
+                                <tr>
+                                    <td><input type="checkbox" name="id" value="<c:out value='${el.id}'/>"></td>
+                                    <td class="text"><c:out value="${el.title}" /></td>
+                                    <td><c:out value="${el.priceF}" /><i class="fa fa-rmb" style="color: #efff23"></i> </td>
+                                    <td><c:out value="${el.num}" /></td>
+                                    <td><c:out value="${el.barcode}" /></td>
+                                    <td class="text"><c:out value="${el.sell_point}" /></td>
+                                    <td>
+                                        <c:if test="${el.status == 0}">
+                                            <span class="status status-info"><i class="fa fa-check"></i>正常</span>
+                                        </c:if>
+                                        <c:if test="${el.status == 1}">
+                                            <span class="status status-warning"><i class="fa fa-times"></i>停售</span>
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadData(<c:out value="${el.id}"/>)">修改</button>
+                                        <div class="modal inmodal in" id="update" tabindex="-1" role="dialog"
+                                             aria-hidden="true" style="display: none;">
 
-                                        <%--</div>--%>
-                                        <%--<c:choose>--%>
-                                            <%--<c:when test="${el.status == 1}">--%>
-                                                <%--<button type="button" class="btn  btn-info" onclick="disabledOrEnabled(${el.id},0)">--%>
-                                                    <%--启用--%>
-                                                <%--</button>--%>
-                                                <%--<button type="button" class="btn  btn-danger" onclick="deleteOne(${el.id})">--%>
-                                                    <%--删除--%>
-                                                <%--</button>--%>
-                                            <%--</c:when>--%>
-                                            <%--<c:when test="${el.status == 0}">--%>
-                                                <%--<button type="button" class="btn  btn-warning" onclick="disabledOrEnabled(${el.id},1)">--%>
-                                                    <%--停职--%>
-                                                <%--</button>--%>
-                                            <%--</c:when>--%>
-                                        <%--</c:choose>--%>
+                                        </div>
+                                        <c:choose>
+                                            <c:when test="${el.status == 1}">
+                                                <button type="button" class="btn  btn-info" onclick="disabledOrEnabled(${el.id},0)">
+                                                    启用
+                                                </button>
+                                                <button type="button" class="btn  btn-danger" onclick="deleteOne(${el.id})">
+                                                    删除
+                                                </button>
+                                            </c:when>
+                                            <c:when test="${el.status == 0}">
+                                                <button type="button" class="btn  btn-warning" onclick="disabledOrEnabled(${el.id},1)">
+                                                    停售
+                                                </button>
+                                            </c:when>
+                                        </c:choose>
 
-                                    <%--</td>--%>
-                                <%--</tr>--%>
-                            <%--</c:forEach>--%>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
 

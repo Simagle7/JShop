@@ -27,4 +27,22 @@ public class ItemEx extends Item {
 	private static final long serialVersionUID = 1L;
 	
 	//针对Item实体在这里增加额外的属性和对应的get和set方法
+	private String priceF;	//格式化后的价格
+	private String category; //所属分类
+
+	public String getPriceF() {
+		return priceF;
+	}
+
+	public void setPriceF(String priceF) {
+		this.priceF = priceF;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }

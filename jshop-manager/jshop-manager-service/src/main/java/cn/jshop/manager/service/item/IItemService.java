@@ -21,8 +21,10 @@ package cn.jshop.manager.service.item;
 import cn.jshop.common.domain.AccountDto;
 import cn.jshop.common.domain.BaseDomain;
 import cn.jshop.manager.dao.IJShopBaseDAO;
+import cn.jshop.manager.param.item.ItemParam;
 import cn.jshop.manager.param.item.ItemParamEx;
 import cn.jshop.manager.service.IJShopBaseService;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 《商品》 业务逻辑服务接口
@@ -39,4 +41,13 @@ public interface IItemService<D extends IJShopBaseDAO<T>, T extends BaseDomain> 
      * @return  返回，视图模型
      */
     String saveItem(ItemParamEx paramEx, AccountDto accountDto);
+
+    /**
+     *  分页查询
+     * @param param     查询参数
+     * @param pageNo    对接
+     * @param pageSize
+     * @return
+     */
+    ModelAndView queryPage(ItemParam param,Integer pageNo, Integer pageSize);
 }

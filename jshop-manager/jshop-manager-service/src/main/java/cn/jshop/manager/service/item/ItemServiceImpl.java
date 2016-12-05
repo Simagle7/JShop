@@ -22,6 +22,7 @@ import cn.jshop.common.domain.AccountDto;
 import cn.jshop.common.exception.BizException;
 import cn.jshop.common.utils.DataStatusEnum;
 import cn.jshop.common.utils.ERRORCODE;
+import cn.jshop.common.utils.PageUtils;
 import cn.jshop.common.utils.RETURNCODE;
 import cn.jshop.manager.dao.IJShopBaseDAO;
 import cn.jshop.manager.dao.base.IFtpFileDAO;
@@ -29,11 +30,13 @@ import cn.jshop.manager.dao.item.IItemDAO;
 import cn.jshop.manager.dao.item.IItemDescDAO;
 import cn.jshop.manager.domain.item.Item;
 import cn.jshop.manager.domain.item.ItemDesc;
+import cn.jshop.manager.domain.item.ItemEx;
 import cn.jshop.manager.param.item.ItemParam;
 import cn.jshop.manager.param.item.ItemParamEx;
 import cn.jshop.manager.service.AbstractJShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -92,5 +95,14 @@ public class ItemServiceImpl extends AbstractJShopService<IJShopBaseDAO<Item>, I
             }
         }
         throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
+    }
+
+    @Override
+    public ModelAndView queryPage(ItemParam param, Integer pageNo, Integer pageSize) {
+        ModelAndView mav = new ModelAndView("item/list");
+        List<ItemEx> data = itemDAO.queryPageEx(param.toMap(), (pageNo - 1) * pageSize, pageSize);
+        int records = itemDAO.countEx(param.toMap());
+        mav.addObject("data", PageUtils.toBizData4Page(data,pageNo, pageSize, records));
+        return mav;
     }
 }

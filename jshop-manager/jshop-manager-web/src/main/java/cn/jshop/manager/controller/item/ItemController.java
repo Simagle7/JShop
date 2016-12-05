@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by 郭旭辉 on 2016/10/20.
@@ -19,9 +21,16 @@ public class ItemController {
     @Autowired
     private IItemService itemService;
 
+    /**
+     * 分页查询商品数据
+     * @param paramEx       查询参数
+     * @param pageNo        页码
+     * @param pageSize      页大小
+     * @return  返回，分页集合
+     */
     @RequestMapping(value = "/item")
-    public String queryPage(){
-        return "item/list";
+    public ModelAndView queryPage(ItemParamEx paramEx, @RequestParam(defaultValue = "1")Integer pageNo, @RequestParam(defaultValue = "10")Integer pageSize){
+        return itemService.queryPage(paramEx, pageNo, pageSize);
     }
 
     @RequestMapping(value = "/add")
