@@ -28,23 +28,32 @@ import java.util.Map;
 
 /**
  * 《商品》 数据访问接口
- * @author 郭旭辉
  *
+ * @author 郭旭辉
  */
 public interface IItemDAO extends IJShopBaseDAO<Item> {
- /**
-  * 分页查询商品
-  * @param condition  查询条件
-  * @param offset     偏移量
-  * @param rows       行数
-  * @return  返回，分页集合
-  */
- List<ItemEx> queryPageEx(@Param("condition")Map<String, Object> condition,@Param("offset")Integer offset, @Param("rows") int rows);
+    /**
+     * 分页查询商品
+     *
+     * @param condition 查询条件
+     * @param offset    偏移量
+     * @param rows      行数
+     * @return 返回，分页集合
+     */
+    List<ItemEx> queryPageEx(@Param("condition") Map<String, Object> condition, @Param("offset") Integer offset, @Param("rows") int rows);
 
- /**
-  * 统计商品
-  * @param condition  查询条件
-  * @return  返回，统计结果
-  */
- int countEx(@Param("condition")Map<String, Object> condition);
+    /**
+     * 统计商品
+     *
+     * @param condition 查询条件
+     * @return 返回，统计结果
+     */
+    int countEx(@Param("condition") Map<String, Object> condition);
+
+    /**
+     * 查询一个商品信息
+     * @param id    商品id
+     * @return  返回，一条商品信息
+     */
+    ItemEx findOneEx(long id);
 }

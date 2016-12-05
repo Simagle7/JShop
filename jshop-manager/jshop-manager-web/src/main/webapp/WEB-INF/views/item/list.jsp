@@ -132,7 +132,7 @@
                                 <tr>
                                     <td><input type="checkbox" name="id" value="<c:out value='${el.id}'/>"></td>
                                     <td class="text"><c:out value="${el.title}" /></td>
-                                    <td><c:out value="${el.priceF}" /><i class="fa fa-rmb" style="color: #efff23"></i> </td>
+                                    <td><c:out value="${el.priceF}" />&nbsp;<i class="fa fa-rmb" style="color: #ffd00c"></i> </td>
                                     <td><c:out value="${el.num}" /></td>
                                     <td><c:out value="${el.barcode}" /></td>
                                     <td class="text"><c:out value="${el.sell_point}" /></td>
@@ -145,7 +145,7 @@
                                         </c:if>
                                     </td>
                                     <td>
-                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadData(<c:out value="${el.id}"/>)">修改</button>
+                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadUpdateBounced(<c:out value="${el.id}"/>)">修改</button>
                                         <div class="modal inmodal in" id="update" tabindex="-1" role="dialog"
                                              aria-hidden="true" style="display: none;">
 

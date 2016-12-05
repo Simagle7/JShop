@@ -45,9 +45,16 @@ public interface IItemService<D extends IJShopBaseDAO<T>, T extends BaseDomain> 
     /**
      *  分页查询
      * @param param     查询参数
-     * @param pageNo    对接
-     * @param pageSize
-     * @return
+     * @param pageNo    页码
+     * @param pageSize  页大小
+     * @return  返回，视图与数据
      */
     ModelAndView queryPage(ItemParam param,Integer pageNo, Integer pageSize);
+
+    /**
+     * 更新商品视图弹窗（数据回显）
+     * @param id       商品id
+     * @return   返回，视图与数据
+     */
+    ModelAndView update(long id);
 }

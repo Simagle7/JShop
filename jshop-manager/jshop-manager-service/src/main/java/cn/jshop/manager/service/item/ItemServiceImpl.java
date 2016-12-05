@@ -105,4 +105,13 @@ public class ItemServiceImpl extends AbstractJShopService<IJShopBaseDAO<Item>, I
         mav.addObject("data", PageUtils.toBizData4Page(data,pageNo, pageSize, records));
         return mav;
     }
+
+    @Override
+    public ModelAndView update(long id) {
+        ItemEx itemEx = itemDAO.findOneEx(id);
+        if (itemEx != null){
+            return new ModelAndView("item/update").addObject("item", itemEx);
+        }
+        throw new BizException(ERRORCODE.NO_DATA_FOUND.getCode(), ERRORCODE.NO_DATA_FOUND.getMessage());
+    }
 }

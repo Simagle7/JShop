@@ -32,4 +32,9 @@
             </if>
         </where>
     </select>
+    <select id="findOneEx" resultType="cn.jshop.manager.domain.item.ItemEx">
+        SELECT ti.* ,format(ti.price/1000,2)as priceF,tic.name as category
+        FROM tb_item  ti LEFT JOIN tb_item_cat tic ON  ti.cid = tic.id
+        WHERE ti.id = #{id}
+    </select>
 </mapper>

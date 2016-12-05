@@ -1,9 +1,9 @@
 /**
  * Created by simagle on 2016/10/17.
  */
-//$("#updateBtn").click(function(){
-//    $("#update").load('update');
-//});
+function loadUpdateBounced(id) {
+    $("#update").load('update',{id: id});
+};
 
 function loadAddBounced() {
     $("#add").load('add');

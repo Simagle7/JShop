@@ -58,9 +58,14 @@ public class ItemController {
         return "item/catTree";
     }
 
-    @RequestMapping(value = "/addImages")
-    public String addImages(){
-        return "item/addImages";
-    }
+    /**
+     *
+     * @param id
+     * @return
+     */
+   @RequestMapping(value = "/update")
+    public ModelAndView update(Long id){
+       return itemService.update(id);
+   }
 
 }
