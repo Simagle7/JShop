@@ -29,7 +29,8 @@ public class ItemEx extends Item {
 	//针对Item实体在这里增加额外的属性和对应的get和set方法
 	private String priceF;	//格式化后的价格
 	private String category; //所属分类
-	private String[] images;
+	private String[] images;	//商品图片列表
+	private String description;	//商品，描述
 
 	public String getPriceF() {
 		return priceF;
@@ -48,10 +49,18 @@ public class ItemEx extends Item {
 	}
 
 	public String[] getImages() {
-		return images;
+		return  this.getImage().split(",");
 	}
 
 	public void setImages(String[] images) {
-		this.images = this.getImage().split(",");
+		this.images = images;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

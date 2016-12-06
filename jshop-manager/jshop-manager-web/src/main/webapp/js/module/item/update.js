@@ -67,7 +67,7 @@ $(document).ready(function () {
 
 });
 //表单检验规则
-var validator = $("#addItem").validate({
+var validator = $("#updateItem").validate({
     rules: {
         title: {required: true},
         cid: {required: true, min: 1},
@@ -129,12 +129,12 @@ $(document).on("click", ".img-box", function () {
 
 //移除图片
 $(document).on("click", ".img-close-btn", function (event) {
-    event.stopPropagation();
     $(this).parent().remove();//移除当前点击元素的父元素
+    event.stopPropagation();
 });
 
 //添加商品
-var addItem = function () {
+var updateItem = function () {
     if (validator.form()) {
         var cid = $("input[name=cid]").val();
         if (isNull(cid)) {
@@ -147,20 +147,20 @@ var addItem = function () {
         });
         var image = img.join(",");
         console.log(image);
-        var data = $("#addItem").serialize();
+        var data = $("#updateItem").serialize();
         var description = editor.$txt.html();
         data += "&description=" + description;
         data += "&image=" + image;
         console.log(data);
         $.ajax({
-            url: 'saveItem',
+            url: 'updateItem',
             type: 'POST',
             dataType: 'JSON',
             data: data,
             success: function (result) {
                 if (isSuccess(result)) {
-                    swal({title: "商品添加成功！", type: "success"}, function () {
-                        $('#add').modal('hide');
+                    swal({title: "商品更新成功！", type: "success"}, function () {
+                        $('#update').modal('hide');
                         //0.5秒延迟
                         setTimeout(function () {
                             window.location.href = "list";

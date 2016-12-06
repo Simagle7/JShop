@@ -57,4 +57,12 @@ public interface IItemService<D extends IJShopBaseDAO<T>, T extends BaseDomain> 
      * @return   返回，视图与数据
      */
     ModelAndView update(long id);
+
+    /**
+     * 保存更新商品
+     * @param paramEx       更新参数
+     * @param accountDto    当前操作者
+     * @return  返回，列表视图
+     */
+    String updateItem(ItemParamEx paramEx, AccountDto accountDto);
 }

@@ -176,24 +176,23 @@
                             <div class="example">
                                 <div class="fixed-table-pagination" style="display: block;">
                                     <div class="pull-left pagination-detail">
-                                        <span class="pagination-info">显示第 1 到第 0 条记录，总共 0 条记录 每页显示</span>
+                                        <span class="pagination-info">显示第 <c:out value="${data.offset}" /> 到第 <c:out value="${data.endOffset}" /> 条记录，总共<c:out value="${data.records}" /> 条记录 每页显示</span>
                                     </div>
                                     <div class="pull-left pagination-detail">
-                                        <select style="width: 75px;float: left; margin-right: 5px;"
-                                                class="form-control input-sm">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
+                                        <select id="pageSize" style="width: 75px;float: left; margin-right: 5px;" class="form-control input-sm" >
+                                            <option value="10" <c:if test="${data.pageSize == 10}">selected</c:if>>10</option>
+                                            <option value="25" <c:if test="${data.pageSize == 25}">selected</c:if>>25</option>
+                                            <option value="50" <c:if test="${data.pageSize == 50}">selected</c:if>>50</option>
+                                            <option value="100" <c:if test="${data.pageSize == 100}">selected</c:if>>100</option>
                                         </select>
                                         <span class="pagination-info"> 条记录</span>
                                     </div>
                                     <div class="pull-right pagination" style="display: block;">
                                         <ul class="pagination pagination-outline">
-                                            <li class="page-first disabled"><a href="javascript:void(0)">«</a></li>
-                                            <li class="page-pre disabled"><a href="javascript:void(0)">‹</a></li>
-                                            <li class="page-next disabled"><a href="javascript:void(0)">›</a></li>
-                                            <li class="page-last disabled"><a href="javascript:void(0)">»</a></li>
+                                            <li class="page-first <c:if test='${data.page == 1}'>disabled</c:if>" ><a href="javascript:void(0)" onclick="selectPage(-9999, ${data.total})">«</a></li>
+                                            <li class="page-pre <c:if test='${data.page == 1}'>disabled</c:if>"><a href="javascript:void(0)" onclick="selectPage(-1, ${data.total})">‹</a></li>
+                                            <li class="page-next <c:if test='${data.page == data.total}'>disabled</c:if>"><a href="javascript:void(0)" onclick="selectPage(1, ${data.total})">›</a></li>
+                                            <li class="page-last <c:if test='${data.page == data.total}'>disabled</c:if>"><a href="javascript:void(0)" onclick="selectPage(9999, ${data.total})">»</a></li>
                                         </ul>
                                     </div>
                                 </div>

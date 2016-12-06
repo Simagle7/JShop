@@ -63,7 +63,7 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="/rest/item/item" data-index="0">商品管理</a>
+                            <a class="J_menuItem" href="/rest/item/list" data-index="0">商品管理</a>
                         </li>
                         <%--<li>--%>
                             <%--<a class="J_menuItem" href="index_v2.html">主页示例二</a>--%>

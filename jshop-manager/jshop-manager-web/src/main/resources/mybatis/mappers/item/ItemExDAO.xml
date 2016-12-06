@@ -33,8 +33,9 @@
         </where>
     </select>
     <select id="findOneEx" resultType="cn.jshop.manager.domain.item.ItemEx">
-        SELECT ti.* ,format(ti.price/1000,2)as priceF,tic.name as category
+        SELECT ti.* ,format(ti.price/1000,2)as priceF,tic.name as category, tid.item_desc as description
         FROM tb_item  ti LEFT JOIN tb_item_cat tic ON  ti.cid = tic.id
+        LEFT JOIN  tb_item_desc tid on ti.id = tid.item_id
         WHERE ti.id = #{id}
     </select>
 </mapper>

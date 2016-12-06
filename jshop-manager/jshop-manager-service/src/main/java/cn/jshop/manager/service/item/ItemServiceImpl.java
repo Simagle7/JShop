@@ -114,4 +114,18 @@ public class ItemServiceImpl extends AbstractJShopService<IJShopBaseDAO<Item>, I
         }
         throw new BizException(ERRORCODE.NO_DATA_FOUND.getCode(), ERRORCODE.NO_DATA_FOUND.getMessage());
     }
+
+    @Override
+    public String updateItem(ItemParamEx paramEx, AccountDto accountDto) {
+        Item item = this.findOne(ItemParam.F_Title, paramEx.getTitle());
+        if(!item.getId().equals(paramEx.getId())){
+            throw new BizException(ERRORCODE.ITEM_TITLE_EXISTS.getCode(), ERRORCODE.ITEM_TITLE_EXISTS.getMessage());
+        }
+        paramEx.setLastModifier(accountDto.getUid());
+        paramEx.setLastModDate(System.currentTimeMillis());
+        if(this.updateMap(paramEx.toMap()) > 0 ){
+            return RETURNCODE.UPDATE_COMPLETE.getMessage();
+        }
+        throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
+    }
 }

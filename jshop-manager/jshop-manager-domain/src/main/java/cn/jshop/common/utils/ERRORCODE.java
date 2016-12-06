@@ -24,7 +24,8 @@ public enum ERRORCODE {
     TOKEN_INVALID("0100014", "凭证已过期"),
     ITEM_EXISTS("0100015","商品已存在"),
     UPLOAD_IMG_ERROR("0100016","上传图片失败"),
-    NO_DATA_FOUND("0100017","暂无该数据")
+    NO_DATA_FOUND("0100017","暂无该数据"),
+    ITEM_TITLE_EXISTS("0100018", "该商品条目已存在"),
     ;
 
     /**
