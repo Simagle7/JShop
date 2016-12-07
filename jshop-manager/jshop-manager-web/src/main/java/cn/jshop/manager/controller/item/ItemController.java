@@ -59,15 +59,7 @@ public class ItemController {
         return itemService.saveItem(paramEx, UserContext.getCurrentUser());
     }
 
-    /**
-     * 返回分类视图
-     *
-     * @return 返回，分类视图
-     */
-    @RequestMapping(value = "/catTree")
-    public String loadCatBounced() {
-        return "item/catTree";
-    }
+
 
     /**
      * 调用更新视图弹窗

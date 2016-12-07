@@ -26,5 +26,14 @@ public class ItemCatController {
         return itemCatService.getChildCat(pId);
     }
 
+    /**
+     * 返回分类视图
+     *
+     * @return 返回，分类视图
+     */
+    @RequestMapping(value = "/catTree")
+    public String loadCatBounced() {
+        return "category/catTree";
+    }
 
 }

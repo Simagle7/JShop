@@ -65,9 +65,9 @@
                         <li>
                             <a class="J_menuItem" href="/rest/item/list" data-index="0">商品管理</a>
                         </li>
-                        <%--<li>--%>
-                            <%--<a class="J_menuItem" href="index_v2.html">主页示例二</a>--%>
-                        <%--</li>--%>
+                        <li>
+                            <a class="J_menuItem" href="/rest/item/dimension/list">商品规格参数</a>
+                        </li>
                         <%--<li>--%>
                             <%--<a class="J_menuItem" href="index_v3.html">主页示例三</a>--%>
                         <%--</li>--%>

@@ -17,3 +17,13 @@
     overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
     text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
 }
+
+/*规格参数*/
+.group-box-btn{height: 40px;width: 100%;margin-bottom: 5px;border: 0;border-bottom:1px solid #ddd; }
+.group-box{height: 200px; overflow: auto;}
+.group-box div{padding: 1px; margin: 5px 0;}
+.group-box input{border-radius: 5px}
+.group-param-add{color: #1ab394}
+.group-param-remove{color: #ed5565}
+.group-param-add:hover{-webkit-transform: scale(1.2);  -moz-transform: scale(1.2);  transform: scale(1.2); }
+.group-param-remove:hover{-webkit-transform: scale(1.2);  -moz-transform: scale(1.2);  transform: scale(1.2); }

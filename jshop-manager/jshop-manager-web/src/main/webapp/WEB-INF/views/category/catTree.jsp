@@ -6,6 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://" +request.getServerName()+":" +request.getServerPort()+path+"/" ;
+    System.out.println(basePath);
+%>
+<base href="http://eshop.cn/" >
+
 <div>
     <ul id="catTree" class="ztree"></ul>
 </div>
@@ -25,7 +32,7 @@ function zTreeOnClick(event, treeId, treeNode) {
 var setting = {
     async: {
         enable: true,
-        url: "cat/getChildCat",
+        url: "http://eshop.cn/rest/item/cat/getChildCat",
         type: 'GET',
         dataType: 'JSON',
         dataFilter: function(treeId, parentNode, responseData){return responseData.bizData},

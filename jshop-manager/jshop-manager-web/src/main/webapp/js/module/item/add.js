@@ -62,7 +62,7 @@ $(document).ready(function () {
         template: '<div class="popover"><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>',
     });
     $("#catBounced").on("shown.bs.popover", function () {
-        $("#tree").load('catTree');
+        $("#tree").load('cat/catTree');
     });
 
 });

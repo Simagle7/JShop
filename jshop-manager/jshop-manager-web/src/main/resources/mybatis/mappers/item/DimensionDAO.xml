@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.jshop.manager.dao.item.IDimensionDAO">
+
+    <sql id="Base_Column_List">
+        id,
+        cid,
+        param_data,
+        creator,
+        createDate,
+        lastModifier,
+        lastModDate,
+        status
+    </sql>
+    <insert id="insert" parameterType="cn.jshop.manager.domain.item.Dimension">
+        INSERT INTO tb_item_dimension (
+		    cid
+		    ,param_data
+		    ,creator
+		    ,createDate
+		    ,lastModifier
+		    ,lastModDate
+		    ,status
+        ) VALUES (
+		    	#{cid}
+		    	,#{param_data}
+		    	,#{creator}
+		    	,#{createDate}
+		    	,#{lastModifier}
+		    	,#{lastModDate}
+		    	,#{status}
+        )
+        <selectKey resultType="java.lang.Long" keyProperty="id">
+        	SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMap" >
+        INSERT INTO tb_item_dimension (
+		    cid
+		    ,param_data
+		    ,creator
+		    ,createDate
+		    ,lastModifier
+		    ,lastModDate
+		    ,status
+        ) VALUES (
+		    	#{map.cid}
+		    	,#{map.param_data}
+		    	,#{map.creator}
+		    	,#{map.createDate}
+		    	,#{map.lastModifier}
+		    	,#{map.lastModDate}
+		    	,#{map.status}
+        )
+    </insert>
+    
+    <!-- 更新 -->
+    <update id="update" parameterType="cn.jshop.manager.domain.item.Dimension">
+        UPDATE tb_item_dimension
+        <trim prefix="SET" suffixOverrides=",">
+		    cid=#{cid},
+		    param_data=#{param_data},
+		    creator=#{creator},
+		    createDate=#{createDate},
+		    lastModifier=#{lastModifier},
+		    lastModDate=#{lastModDate},
+		    status=#{status},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+	
+	<update id="updateMap">
+        UPDATE tb_item_dimension
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="map.cid!=null">
+                cid = #{map.cid},
+            </if>
+            <if test="map.param_data!=null">
+                param_data = #{map.param_data},
+            </if>
+            <if test="map.creator!=null">
+                creator = #{map.creator},
+            </if>
+            <if test="map.createDate!=null">
+                createDate = #{map.createDate},
+            </if>
+            <if test="map.lastModifier!=null">
+                lastModifier = #{map.lastModifier},
+            </if>
+            <if test="map.lastModDate!=null">
+                lastModDate = #{map.lastModDate},
+            </if>
+            <if test="map.status!=null">
+                status = #{map.status},
+            </if>
+        </trim>
+        WHERE
+        id = #{map.id}
+    </update>
+
+    <update id="updateByCondition">
+        UPDATE tb_item_dimension
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="update.cid!=null">
+                cid = #{update.cid},
+            </if>
+            <if test="update.param_data!=null">
+                param_data = #{update.param_data},
+            </if>
+            <if test="update.creator!=null">
+                creator = #{update.creator},
+            </if>
+            <if test="update.createDate!=null">
+                createDate = #{update.createDate},
+            </if>
+            <if test="update.lastModifier!=null">
+                lastModifier = #{update.lastModifier},
+            </if>
+            <if test="update.lastModDate!=null">
+                lastModDate = #{update.lastModDate},
+            </if>
+            <if test="update.status!=null">
+                status = #{update.status},
+            </if>
+        </trim>
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.cid!=null">
+                AND cid = #{condition.cid}
+            </if>
+            <if test="condition.param_data!=null">
+                AND param_data = #{condition.param_data}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+    </update>
+
+    <update id="updateNull" parameterType="cn.jshop.manager.domain.item.Dimension">
+        UPDATE tb_item_dimension
+        <trim prefix="SET" suffixOverrides=",">
+            cid = #{cid},
+            param_data = #{param_data},
+            creator = #{creator},
+            createDate = #{createDate},
+            lastModifier = #{lastModifier},
+            lastModDate = #{lastModDate},
+            status = #{status},
+        </trim>
+        WHERE
+        id = #{id}
+    </update>
+    
+    
+    <!-- 按Id删除 -->
+    <delete id="deleteById" parameterType="java.lang.Long">
+        DELETE FROM tb_item_dimension
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </delete>
+
+    <!--根据list(ids)删除对象-->
+    <delete id="deleteByIds">
+        DELETE FROM tb_item_dimension
+        WHERE id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByCondition" parameterType="java.util.Map">
+        DELETE FROM tb_item_dimension
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id = #{id}
+            </if>
+            <if test="cid!=null">
+                AND cid = #{cid}
+            </if>
+            <if test="param_data!=null">
+                AND param_data = #{param_data}
+            </if>
+            <if test="creator!=null">
+                AND creator = #{creator}
+            </if>
+            <if test="createDate!=null">
+                AND createDate = #{createDate}
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier = #{lastModifier}
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate = #{lastModDate}
+            </if>
+            <if test="status!=null">
+                AND status = #{status}
+            </if>
+        </trim>
+    </delete>
+
+    <delete id="deleteByProperty" parameterType="java.util.Map">
+        DELETE FROM tb_item_dimension WHERE
+        ${property} = #{value}
+    </delete>
+    
+    <!--查询相关 -->
+    <select id="fetch" parameterType="java.lang.Long" resultType="cn.jshop.manager.domain.item.Dimension">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_dimension
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            AND id = #{id}
+        </trim>
+    </select>
+
+    <select id="findOne" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.Dimension">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_dimension WHERE
+        ${property} = #{value}
+        LIMIT 0,1
+    </select>
+
+    <select id="findList" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.Dimension">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_dimension WHERE
+        ${property} = #{value}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="findAll" resultType="Dimension">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_dimension
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryPage" resultType="cn.jshop.manager.domain.item.Dimension">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_dimension
+        <where>
+
+            <if test="condition.whereSql != null">
+                and id in (#{condition.whereSql})
+            </if>
+
+            <if test="condition.id!=null">
+                ${condition.groupOp}   id  ${condition.id.op}  #{condition.id.data}
+            </if>
+            <if test="condition.cid!=null">
+                ${condition.groupOp}   cid  ${condition.cid.op}  #{condition.cid.data}
+            </if>
+            <if test="condition.param_data!=null">
+                ${condition.groupOp}   param_data  ${condition.param_data.op}  #{condition.param_data.data}
+            </if>
+            <if test="condition.creator!=null">
+                ${condition.groupOp}   creator  ${condition.creator.op}  #{condition.creator.data}
+            </if>
+            <if test="condition.createDate!=null">
+                ${condition.groupOp}   createDate  ${condition.createDate.op}  #{condition.createDate.data}
+            </if>
+            <if test="condition.lastModifier!=null">
+                ${condition.groupOp}   lastModifier  ${condition.lastModifier.op}  #{condition.lastModifier.data}
+            </if>
+            <if test="condition.lastModDate!=null">
+                ${condition.groupOp}   lastModDate  ${condition.lastModDate.op}  #{condition.lastModDate.data}
+            </if>
+            <if test="condition.status!=null">
+                ${condition.groupOp}   status  ${condition.status.op}  #{condition.status.data}
+            </if>
+
+
+    </where>
+
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+        <if test="offset != null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+
+    <select id="like" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.Dimension">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_dimension
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="id!=null">
+                AND id like CONCAT('%', #{id} , '%')
+            </if>
+            <if test="cid!=null">
+                AND cid like CONCAT('%', #{cid} , '%')
+            </if>
+            <if test="param_data!=null">
+                AND param_data like CONCAT('%', #{param_data} , '%')
+            </if>
+            <if test="creator!=null">
+                AND creator like CONCAT('%', #{creator} , '%')
+            </if>
+            <if test="createDate!=null">
+                AND createDate like CONCAT('%', #{createDate} , '%')
+            </if>
+            <if test="lastModifier!=null">
+                AND lastModifier like CONCAT('%', #{lastModifier} , '%')
+            </if>
+            <if test="lastModDate!=null">
+                AND lastModDate like CONCAT('%', #{lastModDate} , '%')
+            </if>
+            <if test="status!=null">
+                AND status like CONCAT('%', #{status} , '%')
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+
+    <select id="queryList" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.Dimension">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_dimension
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.cid!=null">
+                AND cid = #{condition.cid}
+            </if>
+            <if test="condition.param_data!=null">
+                AND param_data = #{condition.param_data}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+        <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+        </if>
+    </select>
+
+    <select id="queryOne" parameterType="java.util.Map" resultType="cn.jshop.manager.domain.item.Dimension">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM tb_item_dimension
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="condition.id!=null">
+                AND id = #{condition.id}
+            </if>
+            <if test="condition.cid!=null">
+                AND cid = #{condition.cid}
+            </if>
+            <if test="condition.param_data!=null">
+                AND param_data = #{condition.param_data}
+            </if>
+            <if test="condition.creator!=null">
+                AND creator = #{condition.creator}
+            </if>
+            <if test="condition.createDate!=null">
+                AND createDate = #{condition.createDate}
+            </if>
+            <if test="condition.lastModifier!=null">
+                AND lastModifier = #{condition.lastModifier}
+            </if>
+            <if test="condition.lastModDate!=null">
+                AND lastModDate = #{condition.lastModDate}
+            </if>
+            <if test="condition.status!=null">
+                AND status = #{condition.status}
+            </if>
+        </trim>
+        limit 0,1
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        SELECT count(1) FROM tb_item_dimension
+       <where>
+           <if test="id!=null">
+               ${groupOp} id ${id.op}  #{id.data}
+           </if>
+           <if test="cid!=null">
+               ${groupOp} cid ${cid.op}  #{cid.data}
+           </if>
+           <if test="param_data!=null">
+               ${groupOp} param_data ${param_data.op}  #{param_data.data}
+           </if>
+           <if test="creator!=null">
+               ${groupOp} creator ${creator.op}  #{creator.data}
+           </if>
+           <if test="createDate!=null">
+               ${groupOp} createDate ${createDate.op}  #{createDate.data}
+           </if>
+           <if test="lastModifier!=null">
+               ${groupOp} lastModifier ${lastModifier.op}  #{lastModifier.data}
+           </if>
+           <if test="lastModDate!=null">
+               ${groupOp} lastModDate ${lastModDate.op}  #{lastModDate.data}
+           </if>
+           <if test="status!=null">
+               ${groupOp} status ${status.op}  #{status.data}
+           </if>
+
+       </where>
+    <if test="orderBy!=null">
+        ORDER BY ${orderBy} ${sortBy}
+    </if>
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT
+        MAX(id)
+        FROM tb_item_dimension
+    </select>
+   
+</mapper>
