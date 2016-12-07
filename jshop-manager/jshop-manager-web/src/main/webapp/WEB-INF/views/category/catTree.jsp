@@ -13,7 +13,7 @@
 %>
 <base href="http://eshop.cn/" >
 
-<div>
+<div style="height: 260px;overflow: auto;width: 200px;">
     <ul id="catTree" class="ztree"></ul>
 </div>
 <script>
@@ -32,7 +32,7 @@ function zTreeOnClick(event, treeId, treeNode) {
 var setting = {
     async: {
         enable: true,
-        url: "http://eshop.cn/rest/item/cat/getChildCat",
+        url: "rest/item/cat/getChildCat",
         type: 'GET',
         dataType: 'JSON',
         dataFilter: function(treeId, parentNode, responseData){return responseData.bizData},
@@ -45,7 +45,7 @@ var setting = {
 
 var zNodes = [];
 $.ajax({
-    url: 'cat/getChildCat',
+    url: 'rest/item/cat/getChildCat',
     dataType: 'JSON',
     type: 'GET',
     data: {pId: 0},

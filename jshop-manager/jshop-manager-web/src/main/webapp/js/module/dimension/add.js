@@ -10,7 +10,7 @@ $(document).ready(function () {
         delay: 0.1,
         html: true,
         content: "<div id='tree'></div>",
-        template: '<div class="popover"><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>',
+        template: '<div class="popover"><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content" ><p></p></div></div></div>',
     });
     $("#catBounced").on("shown.bs.popover", function () {
         $("#tree").load('/rest/item/cat/catTree');
