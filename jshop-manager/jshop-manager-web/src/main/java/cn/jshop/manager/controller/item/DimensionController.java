@@ -1,15 +1,19 @@
 package cn.jshop.manager.controller.item;
 
+import cn.jshop.common.utils.User.UserContext;
 import cn.jshop.manager.param.item.DimensionParam;
 import cn.jshop.manager.service.item.IDimensionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by 郭旭辉 on 2016/10/20.
+ * 商品规格参数控制器
  */
 @Controller
 @RequestMapping(value = "/item/dimension")
@@ -40,17 +44,17 @@ public class DimensionController {
         return "dimension/add";
     }
 
-//    /**
-//     * 保存商品条目
-//     *
-//     * @param paramEx 商品信息参数
-//     * @return 返回，操作码
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "/saveItem", method = RequestMethod.POST)
-//    public String saveItem(ItemParamEx paramEx) {
-//        return itemService.saveItem(paramEx, UserContext.getCurrentUser());
-//    }
+    /**
+     * 保存商品规格参数
+     *
+     * @param param 商品规格参数信息
+     * @return 返回，操作码
+     */
+    @ResponseBody
+    @RequestMapping(value = "/saveDimension", method = RequestMethod.POST)
+    public String saveDimension(DimensionParam param) {
+        return dimensionService.saveDimension(param, UserContext.getCurrentUser());
+    }
 //
 //
 //

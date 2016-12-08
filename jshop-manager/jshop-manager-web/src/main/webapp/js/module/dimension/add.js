@@ -13,24 +13,24 @@ $(document).ready(function () {
         template: '<div class="popover"><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content" ><p></p></div></div></div>',
     });
     $("#catBounced").on("shown.bs.popover", function () {
-        $("#tree").load('/rest/item/cat/catTree');
+        $("#tree").load('item/cat/catTree',{allIn: false});
     });
 
 });
 
 //添加分组
-var addGroup  =  function () {
+var addGroup = function () {
     var $dimensionFrom = $("#dimensionform");
-    $dimensionFrom.append("<div><input type='text'> " +
+    $dimensionFrom.append("<div name='group'><input type='text'> " +
         "<i class='click-expand glyphicon glyphicon-plus group-param-add'></i>" +
-        "<div><span>|-------</span> <input type='text'> " +
+        "<div name='param'><span>|-------</span> <input type='text'> " +
         "<i class='click-collapse glyphicon glyphicon-minus group-param-remove'></i> </div></div>")
 };
 //添加分组参数
-$(document).off("click",".group-param-add");
-$(document).on("click",".group-param-add", function () {
+$(document).off("click", ".group-param-add");
+$(document).on("click", ".group-param-add", function () {
     var _dom = $(this);
-    _dom.after("<div><span>|-------</span> <input type='text'> " +
+    _dom.after("<div name='param'><span>|-------</span> <input type='text'> " +
         "<i class='click-collapse glyphicon glyphicon-minus group-param-remove'></i> </div>");
     // event.stopPropagation();
 });
@@ -38,48 +38,71 @@ $(document).on("click",".group-param-add", function () {
 //移除分组参数
 $(document).off("click", ".group-param-remove");
 $(document).on("click", ".group-param-remove", function () {
-     $(this).parent().remove();
+    var _doms = $(this).parent().parent().find(".group-param-remove");
+    if (_doms.length > 1) {
+        $(this).parent().remove();
+    } else {
+        swal({title: "分组参数", text: "分组参数不能少于一个！", type: "warning"})
+    }
 });
 
-//添加商品
+//添加商品规格参数
 var addItem = function () {
-    if (validator.form()) {
-        var cid = $("input[name=cid]").val();
-        if (isNull(cid)) {
-            swal({title: "请选择分类", text: "未选择任何分类！", type: "error"});
-        }
-        var img = [];
-        $("#itemImg img").each(function (index, element) {
-            var src = $(element).attr('src');
-            img.push(src);
-        });
-        var image = img.join(",");
-        console.log(image);
-        var data = $("#addItem").serialize();
-        var description = editor.$txt.html();
-        data += "&description=" + description;
-        data += "&image=" + image;
-        console.log(data);
-        $.ajax({
-            url: 'saveItem',
-            type: 'POST',
-            dataType: 'JSON',
-            data: data,
-            success: function (result) {
-                if (isSuccess(result)) {
-                    swal({title: "商品添加成功！", type: "success"}, function () {
-                        $('#add').modal('hide');
-                        //0.5秒延迟
-                        setTimeout(function () {
-                            window.location.href = "list";
-                        },500);
-                    });
-                } else {
-                    swal({title: result.msg, type: "error"});
-                }
+    //组装规格参数
+    var params = [];
+    var groups = $("#dimensionform").find("[name=group]");
+    groups.each(function (i, e) {
+        var p = $(e).find("[name=param]");
+        var _ps = [];
+        p.each(function (_i, _e) {
+            var _val = $(_e).find("input").val();
+            if ($.trim(_val).length > 0) {
+                _ps.push(_val);
+            }else{
+                swal({title:"分组参数", text:"第"+i+"分组存在空参数",type:"warning"}, function () {
+                    return ;
+                });
             }
-        })
+        });
+        var _val = $(e).find("input").val();
+        if ($.trim(_val).length > 0 && _ps.length > 0) {
+            params.push({
+                "group": _val,
+                "params": _ps
+            });
+        }else{
+            swal({title:"分组参数",text: "第"+i+"分组为空", type: "warning"}, function () {
+                return ;
+            });
+        }
+    });
+    var cid = $("input[name=cid]").val();
+    if (isNull(cid)) {
+        swal({title: "请选择分类", text: "未选择任何分类！", type: "error"});
     }
+
+    //状态参数
+    var data = {cid:cid, param_data: JSON.stringify(params)};
+    console.log(data.param_data);
+    // $.ajax({
+    //     url: 'saveDimension',
+    //     type: 'POST',
+    //     dataType: 'JSON',
+    //     data: data,
+    //     success: function (result) {
+    //         if (isSuccess(result)) {
+    //             swal({title: "商品规格参数模板添加成功！", type: "success"}, function () {
+    //                 $('#add').modal('hide');
+    //                 //0.5秒延迟
+    //                 setTimeout(function () {
+    //                     window.location.href = "/rest/item/dimension/list";
+    //                 }, 500);
+    //             });
+    //         } else {
+    //             swal({title: result.msg, type: "error"});
+    //         }
+    //     }
+    // })
 };
 //点击页面任意地方关闭弹框
 $(document).on('click', function (e) {

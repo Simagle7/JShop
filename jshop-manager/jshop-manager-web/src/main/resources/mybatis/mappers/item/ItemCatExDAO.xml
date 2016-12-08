@@ -17,4 +17,18 @@
 		</where>
 		order by sort_order desc;
 	</select>
+	<select id="getChildAvailableCat" resultType="cn.jshop.common.domain.TreeNode">
+		SELECT id AS id, parent_id AS pid, name AS name, is_parent AS isParent
+		FROM  tb_item_cat tic
+		<where>
+			<if test="pId != null">
+				parent_id = #{pId}
+			</if>
+			<if test="status != null">
+				and status = #{status}
+			</if>
+		</where>
+		and id not in(select distinct cid from tb_item_dimension where status = 0)
+		order by sort_order desc;
+	</select>
 </mapper>

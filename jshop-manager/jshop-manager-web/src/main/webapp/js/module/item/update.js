@@ -62,7 +62,7 @@ $(document).ready(function () {
         template: '<div class="popover"><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>',
     });
     $("#catBounced").on("shown.bs.popover", function () {
-        $("#tree").load('cat/catTree');
+        $("#tree").load('item/cat/catTree');
     });
 
 });
@@ -113,6 +113,7 @@ uploader.init();
 //         template: '<div class="popover"><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content" style="padding: 0"><p></p></div></div></div>'
 //     });
 // });
+$(document).off("click",".img-box");
 $(document).on("click", ".img-box", function () {
     // var $imgDom = $($(this).children(this).get(0));
     var $imgDom = $(this);
@@ -128,6 +129,7 @@ $(document).on("click", ".img-box", function () {
 });
 
 //移除图片
+$(document).off("click",".img-close-btn");
 $(document).on("click", ".img-close-btn", function (event) {
     $(this).parent().remove();//移除当前点击元素的父元素
     event.stopPropagation();
@@ -153,7 +155,7 @@ var updateItem = function () {
         data += "&image=" + image;
         console.log(data);
         $.ajax({
-            url: 'updateItem',
+            url: 'item/updateItem',
             type: 'POST',
             dataType: 'JSON',
             data: data,

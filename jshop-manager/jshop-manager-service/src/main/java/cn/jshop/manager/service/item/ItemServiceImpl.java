@@ -26,6 +26,7 @@ import cn.jshop.common.utils.PageUtils;
 import cn.jshop.common.utils.RETURNCODE;
 import cn.jshop.manager.dao.IJShopBaseDAO;
 import cn.jshop.manager.dao.base.IFtpFileDAO;
+import cn.jshop.manager.dao.item.IDimensionRelDAO;
 import cn.jshop.manager.dao.item.IItemDAO;
 import cn.jshop.manager.dao.item.IItemDescDAO;
 import cn.jshop.manager.domain.item.Item;
@@ -55,6 +56,9 @@ public class ItemServiceImpl extends AbstractJShopService<IJShopBaseDAO<Item>, I
     private IItemDescDAO itemDescDAO;
     @Autowired
     private IFtpFileDAO ftpFileDao;
+    @Autowired
+    private IDimensionRelDAO dimensionRelDAO;
+
 
     @Override
     public IJShopBaseDAO<Item> getDao() {
@@ -128,4 +132,6 @@ public class ItemServiceImpl extends AbstractJShopService<IJShopBaseDAO<Item>, I
         }
         throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
     }
+
+
 }

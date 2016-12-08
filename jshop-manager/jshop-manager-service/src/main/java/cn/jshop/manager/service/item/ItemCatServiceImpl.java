@@ -44,7 +44,13 @@ public class ItemCatServiceImpl extends AbstractJShopService<IJShopBaseDAO<ItemC
     }
 
      @Override
-     public List<TreeNode> getChildCat(int pId) {
-         return itemCatDAO.getChildCat(pId, 1);
+     public List<TreeNode> getChildCat(int pId, Boolean allIn) {
+        if (allIn){
+            return itemCatDAO.getChildCat(pId, 1);
+        }else {
+            return itemCatDAO.getChildAvailableCat(pId,1);
+        }
      }
+
+
  }

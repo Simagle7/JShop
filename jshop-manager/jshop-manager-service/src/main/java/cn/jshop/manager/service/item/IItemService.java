@@ -65,4 +65,6 @@ public interface IItemService<D extends IJShopBaseDAO<T>, T extends BaseDomain> 
      * @return  返回，列表视图
      */
     String updateItem(ItemParamEx paramEx, AccountDto accountDto);
+
+
 }

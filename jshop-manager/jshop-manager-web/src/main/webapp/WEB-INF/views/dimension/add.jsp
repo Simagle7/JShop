@@ -9,12 +9,7 @@
 <%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme()+"://" +request.getServerName()+":" +request.getServerPort()+path+"/" ;
-    System.out.println(basePath);
-%>
-<base href="http://eshop.cn/" >
+<base href="http://eshop.cn/rest/" >
 <style>
     .cat {
         font-size: 14px;
@@ -63,10 +58,10 @@
                                     <button class="btn btn-info" type="button"  onclick="addGroup()" >添加分组</button>
                                 </div>
                                 <div id="dimensionform" class="group-box">
-                                    <div>
+                                    <div name="group">
                                         <input type="text">
                                         <i class="click-expand glyphicon glyphicon-plus group-param-add"></i>
-                                        <div>
+                                        <div name="param">
                                             <span>|-------</span>
                                             <input type="text">
                                             <i class="click-collapse glyphicon glyphicon-minus group-param-remove"></i>

@@ -18,6 +18,10 @@
 
 package cn.jshop.manager.service.item;
 
+import cn.jshop.common.domain.AccountDto;
+import cn.jshop.common.exception.BizException;
+import cn.jshop.common.utils.ERRORCODE;
+import cn.jshop.common.utils.RETURNCODE;
 import cn.jshop.manager.dao.IJShopBaseDAO;
 import cn.jshop.manager.dao.item.IDimensionDAO;
 import cn.jshop.manager.domain.item.Dimension;
@@ -47,4 +51,15 @@ public class DimensionServiceImpl extends AbstractJShopService<IJShopBaseDAO<Dim
         ModelAndView mav = new ModelAndView("dimension/list");
          return mav;
      }
+
+     @Override
+     public String saveDimension(DimensionParam param, AccountDto currentUser) {
+        param.setCreateDate(System.currentTimeMillis());
+        param.setCreator(currentUser.getUid());
+        if(this.insertMap(param.toMap()) > 0){
+            return RETURNCODE.ADD_COMPLETE.getMessage();
+        }
+        throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(),ERRORCODE.OPERATION_FAIL.getMessage());
+     }
+
  }

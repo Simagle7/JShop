@@ -18,6 +18,7 @@
 
 package cn.jshop.manager.service.item;
 
+import cn.jshop.common.domain.AccountDto;
 import cn.jshop.common.domain.BaseDomain;
 import cn.jshop.manager.dao.IJShopBaseDAO;
 import cn.jshop.manager.param.item.DimensionParam;
@@ -39,4 +40,14 @@ public interface IDimensionService<D extends IJShopBaseDAO<T>, T extends BaseDom
      * @return
      */
     ModelAndView queryPage(DimensionParam param, Integer pageNo, Integer pageSize);
+
+    /**
+     * 保存一条商品规格参数模板
+     * @param param             待保存的规格模板参数
+     * @param currentUser       当前操作者
+     * @return  返回，操作码
+     */
+    String saveDimension(DimensionParam param, AccountDto currentUser);
+
+
 }

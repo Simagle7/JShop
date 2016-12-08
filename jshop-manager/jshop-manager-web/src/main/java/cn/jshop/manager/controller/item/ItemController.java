@@ -6,6 +6,7 @@ import cn.jshop.common.utils.RETURNCODE;
 import cn.jshop.common.utils.User.UserContext;
 import cn.jshop.manager.param.item.ItemParam;
 import cn.jshop.manager.param.item.ItemParamEx;
+import cn.jshop.manager.service.item.IDimensionRelService;
 import cn.jshop.manager.service.item.IItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class ItemController {
 
     @Autowired
     private IItemService itemService;
+    @Autowired
+    private IDimensionRelService dimensionRelService;
 
     /**
      * 分页查询商品数据
@@ -81,6 +84,16 @@ public class ItemController {
     @RequestMapping(value = "/updateItem")
     public String updateItem(ItemParamEx paramEx) {
         return itemService.updateItem(paramEx, UserContext.getCurrentUser());
+    }
+
+    /**
+     * 商品参数规格弹框
+     * @param itemId    商品id
+     * @return  返回，视图与数据
+     */
+    @RequestMapping(value = "/loadDimension")
+    public ModelAndView loadDimension(long itemId){
+        return dimensionRelService.loadDimension(itemId);
     }
 
     /**

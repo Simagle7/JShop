@@ -21,11 +21,13 @@ package cn.jshop.manager.service.item;
 import cn.jshop.manager.dao.IJShopBaseDAO;
 import cn.jshop.manager.dao.item.IDimensionRelDAO;
 import cn.jshop.manager.domain.item.DimensionRel;
+import cn.jshop.manager.param.item.DimensionRelParam;
 import cn.jshop.manager.service.AbstractJShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
- /**
+/**
  * 《商品规格和商品的关系》 业务逻辑服务类
  * @author 郭旭辉
  *
@@ -40,4 +42,8 @@ public class DimensionRelServiceImpl extends AbstractJShopService<IJShopBaseDAO<
         return dimensionRelDAO;
     }
 
+    @Override
+    public ModelAndView loadDimension(long itemId) {
+        return new ModelAndView("item/addDimensionInfo").addObject("item", this.findOne(DimensionRelParam.F_ItemId, itemId));
+    }
 }

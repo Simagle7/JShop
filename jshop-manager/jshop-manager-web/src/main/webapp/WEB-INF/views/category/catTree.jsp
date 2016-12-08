@@ -11,7 +11,7 @@
     String basePath = request.getScheme()+"://" +request.getServerName()+":" +request.getServerPort()+path+"/" ;
     System.out.println(basePath);
 %>
-<base href="http://eshop.cn/" >
+<base href="http://eshop.cn/rest/" >
 
 <div style="height: 260px;overflow: auto;width: 200px;">
     <ul id="catTree" class="ztree"></ul>
@@ -32,7 +32,7 @@ function zTreeOnClick(event, treeId, treeNode) {
 var setting = {
     async: {
         enable: true,
-        url: "rest/item/cat/getChildCat",
+        url: "item/cat/getChildCat?allIn="+${allIn},
         type: 'GET',
         dataType: 'JSON',
         dataFilter: function(treeId, parentNode, responseData){return responseData.bizData},
@@ -45,7 +45,7 @@ var setting = {
 
 var zNodes = [];
 $.ajax({
-    url: 'rest/item/cat/getChildCat',
+    url: 'item/cat/getChildCat?allIn='+${allIn},
     dataType: 'JSON',
     type: 'GET',
     data: {pId: 0},

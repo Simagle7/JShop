@@ -6,7 +6,7 @@ function loadUpdateBounced(id) {
 };
 
 function loadAddBounced() {
-    $("#add").load('add');
+    $("#add").load('item/dimension/add');
 }
 function disabledOrEnabled(id, status) {
    var text = status == 1 ? "停售" : "启用";

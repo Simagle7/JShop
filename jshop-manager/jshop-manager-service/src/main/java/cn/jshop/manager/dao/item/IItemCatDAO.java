@@ -40,4 +40,12 @@ public interface IItemCatDAO extends IJShopBaseDAO<ItemCat> {
      * @return  返回，子节点列表
      */
     List<TreeNode> getChildCat(@Param("pId") Integer pId, @Param("status") Integer status);
+
+    /**
+     * 获取空闲可用的分类节点
+     * @param pId   父节点，0：根节点
+     * @param status    状态，可选值:1(正常),2(软删除)
+     * @return 返回，子节点列表
+     */
+    List<TreeNode> getChildAvailableCat(@Param("pId") Integer pId, @Param("status")Integer status);
 }

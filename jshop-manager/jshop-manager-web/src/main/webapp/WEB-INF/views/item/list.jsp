@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<base href="http://eshop.cn/rest/" >
 <html>
 <head>
     <meta charset="utf-8">
@@ -145,8 +146,13 @@
                                         </c:if>
                                     </td>
                                     <td>
-                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadUpdateBounced(<c:out value="${el.id}"/>)">修改</button>
+                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadUpdateBounced(${el.id})">修改</button>
                                         <div class="modal inmodal in" id="update" tabindex="-1" role="dialog"
+                                             aria-hidden="true" style="display: none;">
+
+                                        </div>
+                                        <button type="button" class="btn btn-info" onclick="loadDimensionBounced(${el.id})">规格参数</button>
+                                        <div class="modal inmodal in" id="dimensionForm" tabindex="-1" role="dialog"
                                              aria-hidden="true" style="display: none;">
 
                                         </div>

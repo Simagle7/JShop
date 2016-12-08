@@ -35,7 +35,11 @@ public interface IItemCatService<D extends IJShopBaseDAO<T>, T extends BaseDomai
     /**
      * 根据父节点获取子节点
      * @param pId   父节点，0：根节点
+     * @param allIn 全部节点，true：是，false：否
      * @return  返回，子节点列表
      */
-    List<TreeNode> getChildCat(int pId);
+    List<TreeNode> getChildCat(int pId, Boolean allIn);
+
+
+
 }
