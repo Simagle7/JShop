@@ -18,12 +18,8 @@
 
 package cn.jshop.manager.domain.item;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
-import java.util.*;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 《商品规则参数》扩展实体
@@ -34,4 +30,23 @@ public class DimensionEx extends Dimension {
 	private static final long serialVersionUID = 1L;
 	
 	//针对Dimension实体在这里增加额外的属性和对应的get和set方法
+	private String category;	//分类名称
+
+	private JSONObject contentJson; // 参数内容的json实例
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public JSONObject getContentJson() {
+		return JSON.parseObject(super.getParam_data());
+	}
+
+	public void setContentJson(JSONObject contentJson) {
+		this.contentJson = contentJson;
+	}
 }

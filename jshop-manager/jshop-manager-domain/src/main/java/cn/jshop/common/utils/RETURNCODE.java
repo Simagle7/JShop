@@ -13,6 +13,7 @@ public enum RETURNCODE {
     UPDATE_COMPLETE("0000004", "修改成功"),
     SENDSMS_SUCCESS("0000005", "验证码发送成功"),
     REGISTER_SUCCESS("0000006", "注册成功"),
+    SEARCH_EXISTS("0000007", "查询存在")
     ;
 
     /**

@@ -5,7 +5,7 @@
 	<!-- 在这里存放用户自定义的映射配置（注：ItemDAO.xml里各节点的ID不能在这里重复出现）  -->
 
     <select id="queryPageEx" resultType="cn.jshop.manager.domain.item.ItemEx">
-        select ti.id, ti.title,ti.sell_point,ti.num,barcode, ti.status, format(ti.price/1000,2)as priceF,  tic.name as category
+        select ti.*, format(ti.price/1000,2)as priceF,  tic.name as category
         FROM tb_item  ti LEFT JOIN tb_item_cat tic ON  ti.cid = tic.id
         <where>
             <if test="condition.title != null and condition.title != ''">

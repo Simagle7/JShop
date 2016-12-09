@@ -7,12 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <base href="http://eshop.cn/rest/" >
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>医疗人员管理页面</title>
+    <title>商品规格参数管理页面</title>
     <link rel="shortcut icon" href="favicon.ico"/>
     <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet"/>
     <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet"/>
@@ -119,11 +120,9 @@
                             <thead>
                             <tr>
                                 <th width="3%"><input type="checkbox"></th>
-                                <th width="19%">标题</th>
-                                <th width="10%">价格</th>
-                                <th width="6%">库存</th>
-                                <th width="10%">条形码</th>
-                                <th width="25%">卖点</th>
+                                <th width="10%">所属分类</th>
+                                <th width="49%">规格模板</th>
+                                <th width="10%">创建时间</th>
                                 <th width="8%">状态</th>
                                 <th width="20%">操作</th>
                             </tr>
@@ -131,22 +130,24 @@
                             <tbody>
                             <c:forEach items="${data.rows}" var="el">
                                 <tr>
-                                    <td><input type="checkbox" name="id" value="<c:out value='${el.id}'/>"></td>
-                                    <td class="text"><c:out value="${el.title}" /></td>
-                                    <td><c:out value="${el.priceF}" />&nbsp;<i class="fa fa-rmb" style="color: #ffd00c"></i> </td>
-                                    <td><c:out value="${el.num}" /></td>
-                                    <td><c:out value="${el.barcode}" /></td>
-                                    <td class="text"><c:out value="${el.sell_point}" /></td>
+                                    <td><input type="checkbox" name="id" value="${el.id}"></td>
+                                    <td>${el.category}"</td>
+                                    <td>${el.param_data}</td>
+                                    <td>
+                                        <jsp:useBean id="createDate" class="java.util.Date"/>
+                                        <c:set target="${createDate}" property="time" value="${el.createDate}"/>
+                                        <fmt:formatDate pattern="yyyy-MM-dd" value="${createDate}" type="both"/></td>
+                                    </td>
                                     <td>
                                         <c:if test="${el.status == 0}">
                                             <span class="status status-info"><i class="fa fa-check"></i>正常</span>
                                         </c:if>
                                         <c:if test="${el.status == 1}">
-                                            <span class="status status-warning"><i class="fa fa-times"></i>停售</span>
+                                            <span class="status status-warning"><i class="fa fa-times"></i>停用</span>
                                         </c:if>
                                     </td>
                                     <td>
-                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadUpdateBounced(<c:out value="${el.id}"/>)">修改</button>
+                                        <button data-toggle="modal" data-target="#update" type="button" class="btn btn-info" onclick="loadUpdateBounced(${el.id})">修改</button>
                                         <div class="modal inmodal in" id="update" tabindex="-1" role="dialog"
                                              aria-hidden="true" style="display: none;">
 
@@ -162,7 +163,7 @@
                                             </c:when>
                                             <c:when test="${el.status == 0}">
                                                 <button type="button" class="btn  btn-warning" onclick="disabledOrEnabled(${el.id},1)">
-                                                    停售
+                                                    停用
                                                 </button>
                                             </c:when>
                                         </c:choose>
@@ -177,7 +178,7 @@
                             <div class="example">
                                 <div class="fixed-table-pagination" style="display: block;">
                                     <div class="pull-left pagination-detail">
-                                        <span class="pagination-info">显示第 <c:out value="${data.offset}" /> 到第 <c:out value="${data.endOffset}" /> 条记录，总共<c:out value="${data.records}" /> 条记录 每页显示</span>
+                                        <span class="pagination-info">显示第 ${data.offset} 到第 ${data.endOffset} 条记录，总共${data.records} 条记录 每页显示</span>
                                     </div>
                                     <div class="pull-left pagination-detail">
                                         <select id="pageSize" style="width: 75px;float: left; margin-right: 5px;" class="form-control input-sm" >

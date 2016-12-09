@@ -26,6 +26,8 @@ public enum ERRORCODE {
     UPLOAD_IMG_ERROR("0100016","上传图片失败"),
     NO_DATA_FOUND("0100017","暂无该数据"),
     ITEM_TITLE_EXISTS("0100018", "该商品条目已存在"),
+    NO_DIMENSION_EXISTS("0100019","无该商品参数模板存在"),
+    EXISTS_DIMENSION_ACTIVE("0100020","存在正在使用商品规格参数模板，请先停用其再启用本模板")
     ;
 
     /**

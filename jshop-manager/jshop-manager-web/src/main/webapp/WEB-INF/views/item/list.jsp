@@ -151,7 +151,7 @@
                                              aria-hidden="true" style="display: none;">
 
                                         </div>
-                                        <button type="button" class="btn btn-info" onclick="loadDimensionBounced(${el.id})">规格参数</button>
+                                        <button type="button" class="btn btn-info" onclick="loadDimensionBounced(${el.id},${el.cid})">规格参数</button>
                                         <div class="modal inmodal in" id="dimensionForm" tabindex="-1" role="dialog"
                                              aria-hidden="true" style="display: none;">
 

@@ -3,5 +3,40 @@
 
 <mapper namespace="cn.jshop.manager.dao.item.IDimensionDAO">
 	<!-- 在这里存放用户自定义的映射配置（注：DimensionDAO.xml里各节点的ID不能在这里重复出现）  -->
-	
+
+    <select id="queryPageEx" resultType="cn.jshop.manager.domain.item.DimensionEx">
+        SELECT tid.*,tic.name AS category
+        FROM tb_item_dimension tid LEFT JOIN tb_item_cat tic
+        ON tid.cid = tic.id
+        <where>
+            <if test="condition.cid != null">
+                tid.cid = #{condition.cid}
+            </if>
+            <if test="condition.status != null">
+                tid.status = #{condition.status}
+            </if>
+        </where>
+        order by tid.createDate
+        <if test="offset!= null">
+            limit ${offset}, ${rows}
+        </if>
+    </select>
+    <select id="countEx" resultType="java.lang.Integer">
+        SELECT count(tid.id)
+        FROM tb_item_dimension tid LEFT JOIN tb_item_cat tic
+        ON tid.cid = tic.id
+        <where>
+            <if test="condition.cid != null">
+                tid.cid = #{condition.cid}
+            </if>
+            <if test="condition.status != null">
+                tid.status = #{condition.status}
+            </if>
+        </where>
+    </select>
+
+    <select id="findOneEx" resultType="cn.jshop.manager.domain.item.DimensionEx">
+        SELECT * FROM tb_item_dimension
+        WHERE id #{id}
+    </select>
 </mapper>

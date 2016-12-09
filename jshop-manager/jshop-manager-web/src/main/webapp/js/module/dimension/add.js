@@ -84,25 +84,25 @@ var addItem = function () {
     //状态参数
     var data = {cid:cid, param_data: JSON.stringify(params)};
     console.log(data.param_data);
-    // $.ajax({
-    //     url: 'saveDimension',
-    //     type: 'POST',
-    //     dataType: 'JSON',
-    //     data: data,
-    //     success: function (result) {
-    //         if (isSuccess(result)) {
-    //             swal({title: "商品规格参数模板添加成功！", type: "success"}, function () {
-    //                 $('#add').modal('hide');
-    //                 //0.5秒延迟
-    //                 setTimeout(function () {
-    //                     window.location.href = "/rest/item/dimension/list";
-    //                 }, 500);
-    //             });
-    //         } else {
-    //             swal({title: result.msg, type: "error"});
-    //         }
-    //     }
-    // })
+    $.ajax({
+        url: 'item/dimension/saveDimension',
+        type: 'POST',
+        dataType: 'JSON',
+        data: data,
+        success: function (result) {
+            if (isSuccess(result)) {
+                swal({title: "商品规格参数模板添加成功！", type: "success"}, function () {
+                    $('#add').modal('hide');
+                    //0.5秒延迟
+                    setTimeout(function () {
+                        window.location.href = "item/dimension/list";
+                    }, 500);
+                });
+            } else {
+                swal({title: result.msg, type: "error"});
+            }
+        }
+    })
 };
 //点击页面任意地方关闭弹框
 $(document).on('click', function (e) {

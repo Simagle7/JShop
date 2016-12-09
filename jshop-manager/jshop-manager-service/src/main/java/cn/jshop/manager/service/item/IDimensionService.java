@@ -50,4 +50,26 @@ public interface IDimensionService<D extends IJShopBaseDAO<T>, T extends BaseDom
     String saveDimension(DimensionParam param, AccountDto currentUser);
 
 
+    /**
+     * 跳转到更新视图
+     * @param id    商品参数模板
+     * @return  返回，视图与数据
+     */
+    ModelAndView update(Long id);
+
+    /**
+     * 更新一条商品规格参数模板
+     * @param param         更新参数
+     * @param currentUser   当前操作者
+     * @return  返回，操作码
+     */
+    String updateDimension(DimensionParam param, AccountDto currentUser);
+
+    /**
+     * 停用、启用当期一条商品规格参数
+     * @param dimensionParam     停用启用参数
+     * @param currentUser   当前操作者
+     * @return  返回，操作码
+     */
+    String disabledOrEnable(DimensionParam dimensionParam, AccountDto currentUser);
 }

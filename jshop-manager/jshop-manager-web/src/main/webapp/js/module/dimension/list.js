@@ -2,16 +2,16 @@
  * Created by simagle on 2016/10/17.
  */
 function loadUpdateBounced(id) {
-    $("#update").load('update',{id: id});
+    $("#update").load('item/dimension/update',{id: id});
 };
 
 function loadAddBounced() {
     $("#add").load('item/dimension/add');
 }
 function disabledOrEnabled(id, status) {
-   var text = status == 1 ? "停售" : "启用";
+   var text = status == 1 ? "停用" : "启用";
    swal({
-       title: "确定要" + text + "该商品？",
+       title: "确定要" + text + "该商品规格参数？",
        type: "warning",
        showCancelButton: true,
        confirmButtonColor: "#DD6B55",
@@ -19,7 +19,7 @@ function disabledOrEnabled(id, status) {
        cancelButtonText: "取消"
    }, function () {
        $.ajax({
-           url: 'disabledOrEnable',
+           url: 'item/dimension/disabledOrEnable',
            data: {id: id, status: status},
            type: "GET",
            async: false,
@@ -29,6 +29,8 @@ function disabledOrEnabled(id, status) {
                    setTimeout(function () {
                        window.location.href = "list";
                    }, 500);
+               }else{
+                   swal({title:text+"失败", text: result.msg, type: 'warning'});
                }
 
            }
@@ -37,7 +39,7 @@ function disabledOrEnabled(id, status) {
 }
 function deleteOne(id) {
    swal({
-       title: "确定删除该条商品信息？",
+       title: "确定删除该条商品规格参数模板？",
        text: "删除后将无法恢复，请谨慎操作！",
        type: "error",
        showCancelButton: true,
@@ -46,7 +48,7 @@ function deleteOne(id) {
        cancelButtonText: "取消"
    }, function () {
        $.ajax({
-           url: 'deleteOne',
+           url: 'item/dimension/deleteOne',
            data: {id: id},
            type: "GET",
            async: false,
@@ -54,7 +56,7 @@ function deleteOne(id) {
                //重新加载页面
                if (isSuccess(result)) {
                    setTimeout(function () {
-                       window.location.href = "list";
+                       window.location.href = "item/dimension/list";
                    }, 500);
                }
 
@@ -71,7 +73,7 @@ var searchForm = "";    //查询条件
  */
 $("#pageSize").change(function () {
     pageSize = $(this).children('option:selected').val();
-    window.location.href = "/rest/item/list?pageNo=" + pageNo + "&pageSize=" + pageSize;
+    window.location.href = "item/dimension/list?pageNo=" + pageNo + "&pageSize=" + pageSize;
 });
 
 /**
@@ -81,7 +83,7 @@ var queryPage = function () {
     searchForm = $("#searchForm").serialize();
     searchForm += "&pageNo=" + pageNo;
     searchForm += "&pageSize=" + pageSize;
-    window.location.href = "/rest/item/list?" + searchForm;
+    window.location.href = "item/dimension/list?" + searchForm;
 };
 
 /**

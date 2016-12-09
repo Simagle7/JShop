@@ -1,5 +1,9 @@
 package cn.jshop.manager.controller.item;
 
+import cn.jshop.common.domain.BaseDomain;
+import cn.jshop.common.exception.BizException;
+import cn.jshop.common.utils.ERRORCODE;
+import cn.jshop.common.utils.RETURNCODE;
 import cn.jshop.common.utils.User.UserContext;
 import cn.jshop.manager.param.item.DimensionParam;
 import cn.jshop.manager.service.item.IDimensionService;
@@ -55,57 +59,64 @@ public class DimensionController {
     public String saveDimension(DimensionParam param) {
         return dimensionService.saveDimension(param, UserContext.getCurrentUser());
     }
-//
-//
-//
-//    /**
-//     * 调用更新视图弹窗
-//     *
-//     * @param id 商品id
-//     * @return 返回，视图与数据
-//     */
-//    @RequestMapping(value = "/update")
-//    public ModelAndView update(Long id) {
-//        return itemService.update(id);
-//    }
-//
-//    /**
-//     * 保存一条跟新信息
-//     * @param paramEx   更新参数
-//     * @return  返回，操作码
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "/updateItem")
-//    public String updateItem(ItemParamEx paramEx) {
-//        return itemService.updateItem(paramEx, UserContext.getCurrentUser());
-//    }
-//
-//    /**
-//     * 删除一条商品信息
-//     * @param id    商品id
-//     * @return  返回，操作码
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "/deleteOne")
-//    public String deleteOne(Long id){
-//        if(itemService.deleteById(id) > 0){
-//            return RETURNCODE.DELETE_COMPLETE.getMessage();
-//        }
-//        throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
-//    }
-//
-//    /**
-//     * 启用、停售商品
-//     * @param itemParam 更新参数（商品id，状态，0：正常，1：停售）
-//     * @return  返回，操作码
-//     */
-//    @ResponseBody
-//    @RequestMapping(value = "/disabledOrEnable")
-//    public String disabledOrEnable(ItemParam itemParam){
-//        if(itemService.updateMap(itemParam.toMap()) > 0){
-//            return RETURNCODE.SUCCESS_COMPLETE.getMessage();
-//        }
-//        throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
-//    }
+
+    @ResponseBody
+    @RequestMapping(value="/isExist")
+    public String isExist(long cid){
+        BaseDomain one = dimensionService.findOne(DimensionParam.F_Cid, cid);
+        if(one != null){
+            return RETURNCODE.SEARCH_EXISTS.getMessage();
+        }
+        throw new BizException(ERRORCODE.NO_DIMENSION_EXISTS.getCode(), ERRORCODE.NO_DIMENSION_EXISTS.getMessage());
+    }
+
+
+
+    /**
+     * 调用更新视图弹窗
+     *
+     * @param id 商品id
+     * @return 返回，视图与数据
+     */
+    @RequestMapping(value = "/update")
+    public ModelAndView update(Long id) {
+        return dimensionService.update(id);
+    }
+
+    /**
+     * 保存一条更新信息
+     * @param param   更新参数
+     * @return  返回，操作码
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateDimension")
+    public String updateDimension(DimensionParam param) {
+        return dimensionService.updateDimension(param, UserContext.getCurrentUser());
+    }
+
+    /**
+     * 删除一条商品信息
+     * @param id    商品id
+     * @return  返回，操作码
+     */
+    @ResponseBody
+    @RequestMapping(value = "/deleteOne")
+    public String deleteOne(Long id){
+        if(dimensionService.deleteById(id) > 0){
+            return RETURNCODE.DELETE_COMPLETE.getMessage();
+        }
+        throw new BizException(ERRORCODE.OPERATION_FAIL.getCode(), ERRORCODE.OPERATION_FAIL.getMessage());
+    }
+
+    /**
+     * 启用、停用商品规格参数模板
+     * @param dimensionParam 更新参数（商品规格参数模板id，状态，0：正常，1：停用，cid：所属商品分类）
+     * @return  返回，操作码
+     */
+    @ResponseBody
+    @RequestMapping(value = "/disabledOrEnable")
+    public String disabledOrEnable(DimensionParam dimensionParam){
+       return dimensionService.disabledOrEnable(dimensionParam, UserContext.getCurrentUser());
+    }
 
 }
