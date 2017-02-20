@@ -9,7 +9,6 @@ function loadAddBounced() {
     $("#add").load('item/add');
 }
 function loadDimensionBounced(itemId, cid) {
-    console.
     //先判断是否存在对应分类的参数模板
     $.ajax({
         url: "item/dimension/isExist",

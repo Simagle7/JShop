@@ -181,7 +181,7 @@ public class FtpUtils {
     public static void main(String[] args) {
         try {
             FileInputStream in=new FileInputStream(new File("D:\\1480258747.jpg"));
-            boolean flag = uploadFile("192.168.106.128", 21, "ftpuser", "cao784137.", "/home/ftpuser/www/images","/2015/01/21", "gaigeming3.png", in);
+            boolean flag = uploadFile("119.29.168.228", 21, "ftpuser", "cao784137.", "/home/ftpuser/www/images","/2017/01/21", "gaigeming3.png", in);
 //            boolean flag = removeFile("192.168.106.129", 21, "ftpuser", "cao784137.", "/home/ftpuser/www/images", "/2015/01/21", "gaigeming3.jpg");
             System.out.println(flag);
         } catch (Exception e) {

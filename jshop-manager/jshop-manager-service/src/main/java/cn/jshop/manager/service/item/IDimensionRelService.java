@@ -33,7 +33,8 @@ public interface IDimensionRelService<D extends IJShopBaseDAO<T>, T extends Base
     /**
      * 商品规格参数弹框
      * @param itemId    商品id
+     * @param cid       商品分类cid
      * @return  返回，视图与数据
      */
-     ModelAndView loadDimension(long itemId);
+     ModelAndView loadDimension(long itemId, long cid);
  }

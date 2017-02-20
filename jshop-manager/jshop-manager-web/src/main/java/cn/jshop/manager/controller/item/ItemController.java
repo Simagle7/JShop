@@ -89,11 +89,12 @@ public class ItemController {
     /**
      * 商品参数规格弹框
      * @param itemId    商品id
+     * @param cid       商品分类id
      * @return  返回，视图与数据
      */
     @RequestMapping(value = "/loadDimension")
-    public ModelAndView loadDimension(long itemId){
-        return dimensionRelService.loadDimension(itemId);
+    public ModelAndView loadDimension(long itemId, long cid){
+        return dimensionRelService.loadDimension(itemId, cid);
     }
 
     /**
